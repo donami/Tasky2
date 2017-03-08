@@ -16,11 +16,17 @@ public class TaskHandler extends Observable {
 
     private App app;
     private SortableList<Task> tasks;
+    private SortOrder defaultSortingOrder = SortOrder.ASC;
 
     public TaskHandler(App app) {
         this.app = app;
         this.tasks = new SortableList<>();
     }
+
+    public enum SortOrder {
+        ASC, DESC
+    }
+
 
     /**
      * Get the filename to use based on the users username
@@ -86,7 +92,16 @@ public class TaskHandler extends Observable {
     }
 
     public void sortTasks() {
-        this.tasks.sort();
+        this.sortTasks(this.defaultSortingOrder);
+    }
+
+    public void sortTasks(SortOrder sortingOrder) {
+        if (sortingOrder == SortOrder.ASC) {
+            this.tasks.sort();
+        }
+        else {
+            this.tasks.sortDesc();
+        }
 
         setChanged();
         notifyObservers();

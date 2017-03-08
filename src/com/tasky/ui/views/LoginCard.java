@@ -1,13 +1,9 @@
 package com.tasky.ui.views;
 
-import com.tasky.app.models.User;
-import com.tasky.db.dao.UserDao;
 import com.tasky.ui.BaseFrame;
-import com.tasky.ui.views.HomeCard;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
-import javax.xml.soap.Text;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -45,7 +41,7 @@ public class LoginCard extends JPanel {
 
         this.usernameTextField.setPreferredSize(new Dimension(500, 30));
         this.usernameTextField.setMaximumSize(this.usernameTextField.getPreferredSize());
-        this.usernameTextField.setText("user"); // TODO: 2017-03-08 remove line 
+        this.usernameTextField.setText("user"); // TODO: 2017-03-08 remove line
         this.passwordTextField.setPreferredSize(new Dimension(500, 30));
         this.passwordTextField.setMaximumSize(this.passwordTextField.getPreferredSize());
         this.passwordTextField.setText("123");  // TODO: 2017-03-08 remove line 
