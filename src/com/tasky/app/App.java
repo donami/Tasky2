@@ -1,9 +1,11 @@
 package com.tasky.app;
 
+import com.tasky.app.models.Task;
 import com.tasky.app.models.User;
 import com.tasky.db.MySQLAccess;
 import com.tasky.db.dao.UserDao;
 import com.tasky.ui.UI;
+import com.tasky.util.SortableList;
 
 import java.sql.Connection;
 
@@ -19,6 +21,20 @@ public class App {
     private Connection conn;
 
     public App() {
+        SortableList fList = new SortableList();
+//        fList.add(40);
+//        fList.add(2);
+//        fList.add(20);
+        fList.add(new Task("Task1"));
+        fList.add(new Task("Task5"));
+        fList.add(new Task("Task3"));
+
+        System.out.println(fList.toString());
+
+        fList.sort();
+        System.out.println(fList.toString());
+//        fList.filterByName("A");
+
         try {
             this.conn = new MySQLAccess().getConnection();
         } catch (ClassNotFoundException e) {

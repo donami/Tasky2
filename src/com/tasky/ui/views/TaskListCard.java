@@ -1,5 +1,6 @@
 package com.tasky.ui.views;
 
+import com.tasky.app.models.Task;
 import com.tasky.ui.BaseFrame;
 import net.miginfocom.swing.MigLayout;
 import javax.swing.*;
@@ -7,6 +8,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Iterator;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -15,7 +17,7 @@ import java.util.Observer;
  */
 
 public class TaskListCard extends JPanel implements Observer {
-    final public static String TASK_LIST_CARD = "Task List Card";
+    final public static String TASK_LIST_CARD = "Task SLList Card";
 
     private BaseFrame baseFrame;
     private JLabel titleLabel;
@@ -64,8 +66,9 @@ public class TaskListCard extends JPanel implements Observer {
     private void refreshListModel() {
         this.listModel.clear();
 
-        for (Object task : this.baseFrame.getApp().getTaskHandler().getTasks()) {
-            this.listModel.addElement(task);
+        Iterator<Task> listIterator = this.baseFrame.getApp().getTaskHandler().getTasks().iterator();
+        while (listIterator.hasNext()) {
+            this.listModel.addElement(listIterator.next());
         }
     }
 

@@ -2,10 +2,11 @@ package com.tasky.app;
 
 import com.tasky.app.models.Task;
 import com.tasky.util.Encrypt;
+import com.tasky.util.SortableList;
+import com.tasky.util.SLList;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Iterator;
 import java.util.Observable;
 
 /**
@@ -14,11 +15,11 @@ import java.util.Observable;
 public class TaskHandler extends Observable {
 
     private App app;
-    private List<String> tasks;
+    private SortableList<Task> tasks;
 
     public TaskHandler(App app) {
         this.app = app;
-        this.tasks = new ArrayList<>();
+        this.tasks = new SortableList<>();
     }
 
     /**
@@ -30,7 +31,7 @@ public class TaskHandler extends Observable {
     }
 
     public void addTask(String taskName) {
-        // Add the task to the file, appending to previous tasks
+        // Add the task to the file, appending to previous _tasks
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(this.getFilename(), true))) {
 
             String content = taskName + "\n";
@@ -41,13 +42,13 @@ public class TaskHandler extends Observable {
             e.printStackTrace();
         }
 
-        this.tasks.add(taskName);
+        this.tasks.add(new Task(taskName));
         setChanged();
         notifyObservers(taskName);
     }
 
     public void loadFromFile() {
-        // Load the tasks from file to the list
+        // Load the _tasks from file to the list
         try {
             File file = new File(this.getFilename());
 
@@ -56,7 +57,7 @@ public class TaskHandler extends Observable {
                 BufferedReader bufferedReader = new BufferedReader(fileReader);
                 String line;
                 while ((line = bufferedReader.readLine()) != null) {
-                    this.tasks.add(line);
+                    this.tasks.add(new Task(line));
                 }
                 fileReader.close();
             }
@@ -67,13 +68,15 @@ public class TaskHandler extends Observable {
 
     public void deleteTask(int index) {
         // Remove element from list model
-        this.tasks.remove(index);
+        this.tasks.remove(index + 1);
 
-        // Write the tasks to the files, overwriting the old file
+        // Write the _tasks to the files, overwriting the old file
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(this.getFilename()))) {
-            for (Object taskName : this.tasks) {
-                bw.write((String)taskName + "\n");
+            Iterator<Task> listIterator = this.tasks.iterator();
+            while (listIterator.hasNext()) {
+                bw.write(listIterator.next() + "\n");
             }
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -82,7 +85,7 @@ public class TaskHandler extends Observable {
         notifyObservers();
     }
 
-    public List getTasks() {
+    public SLList<Task> getTasks() {
         return this.tasks;
     }
 
