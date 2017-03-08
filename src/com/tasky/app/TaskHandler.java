@@ -72,6 +72,20 @@ public class TaskHandler extends Observable {
         }
     }
 
+    public void setComplete(int index) {
+        Task task = this.tasks.get(index);
+        task.setCompleted(true);
+        setChanged();
+        notifyObservers(task.getName());
+    }
+
+    public void setNotComplete(int index) {
+        Task task = this.tasks.get(index);
+        task.setCompleted(false);
+        setChanged();
+        notifyObservers(task.getName());
+    }
+
     public void deleteTask(int index) {
         // Remove element from list model
         this.tasks.remove(index + 1);

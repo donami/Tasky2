@@ -3,6 +3,7 @@ package com.tasky.ui.views;
 import com.tasky.app.TaskHandler;
 import com.tasky.app.models.Task;
 import com.tasky.ui.BaseFrame;
+import com.tasky.ui.ListCellRenderer;
 import net.miginfocom.swing.MigLayout;
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
@@ -26,13 +27,16 @@ public class TaskListCard extends JPanel implements Observer {
     private JButton addTaskButton;
     private JButton sortAscendingButton;
     private JButton sortDescendingButton;
-    private JList taskList;
-    private DefaultListModel listModel;
+    private JButton setCompleteButton;
+    private JButton setNotCompleteButton;
+    private DefaultListModel<Task> listModel;
+    private JScrollPane jScrollPane1;
+    private JList<Task> taskList;
 
     public TaskListCard(BaseFrame baseFrame) {
         this.baseFrame = baseFrame;
 
-        this.initComponents();
+         this.initComponents();
         this.createGUI();
         this.addEvents();
     }
@@ -47,11 +51,13 @@ public class TaskListCard extends JPanel implements Observer {
 
         this.listModel = new DefaultListModel();
 
-        this.refreshListModel();
+        this.taskList = new JList<>();
+        this.taskList.setModel(this.listModel);
+        ListCellRenderer renderer = new ListCellRenderer();
+        this.taskList.setCellRenderer(renderer);
+        this.jScrollPane1 = new JScrollPane(taskList);
 
-        this.taskList = new JList(this.listModel);
-        this.taskList.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
-        this.taskList.setVisibleRowCount(-1);
+        this.refreshListModel();
 
         this.titleLabel = new JLabel("Your tasks");
         this.addTaskButton = new JButton("Add task");
@@ -59,15 +65,19 @@ public class TaskListCard extends JPanel implements Observer {
         this.deleteTaskButton.setEnabled(false);
         this.sortAscendingButton = new JButton("Sort");
         this.sortDescendingButton = new JButton("Sort descending");
+        this.setCompleteButton = new JButton("Mark as completed");
+        this.setNotCompleteButton = new JButton("Mark as not complete");
     }
 
     private void createGUI() {
         this.add(this.titleLabel, "w 80%");
         this.add(this.sortAscendingButton, "w 10%");
         this.add(this.sortDescendingButton, "w 10%");
+        this.add(this.setCompleteButton, "w 10%");
+        this.add(this.setNotCompleteButton, "w 10%");
         this.add(this.addTaskButton, "w 10%");
         this.add(this.deleteTaskButton, "w 10%, wrap");
-        this.add(this.taskList, "w 100%, h 100%, span, wrap");
+        this.add(this.jScrollPane1, "w 100%, h 100%, span, wrap");
     }
 
     private void refreshListModel() {
@@ -131,5 +141,24 @@ public class TaskListCard extends JPanel implements Observer {
                 baseFrame.getApp().getTaskHandler().sortTasks(TaskHandler.SortOrder.DESC);
             }
         });
+
+        this.setCompleteButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (taskList.getSelectedIndex() > -1) {
+                    baseFrame.getApp().getTaskHandler().setComplete(taskList.getSelectedIndex() + 1);
+                }
+            }
+        });
+
+        this.setNotCompleteButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (taskList.getSelectedIndex() > -1) {
+                    baseFrame.getApp().getTaskHandler().setNotComplete(taskList.getSelectedIndex() + 1);
+                }
+            }
+        });
     }
+
 }
