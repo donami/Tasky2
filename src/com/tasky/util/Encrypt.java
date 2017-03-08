@@ -5,10 +5,15 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 /**
- * Created by markus on 2017-03-02.
+ * Created by markus on 2017-03-09.
  */
 public class Encrypt {
 
+    /**
+     * Encrypt a string using MD5 encryption
+     * @param toEncrypt The string to be encrypted
+     * @return  Encrypted string
+     */
     public static String encrypt(String toEncrypt) {
         try {
             MessageDigest m = MessageDigest.getInstance("MD5");

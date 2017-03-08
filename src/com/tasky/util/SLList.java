@@ -20,6 +20,10 @@ public class SLList<T extends Comparable<T>> implements IList<T> {
         this.last = null;
     }
 
+    /**
+     * Add a new node to the list at the last position
+     * @param data The data to be added
+     */
     public void add(T data) {
         if (this.nrOfElements == 0) {
             this.addToEmptyList(data);
@@ -34,6 +38,11 @@ public class SLList<T extends Comparable<T>> implements IList<T> {
         }
     }
 
+    /**
+     * Add a new node at specified position
+     * @param data  The data to be added
+     * @param pos   The position to be inserted at, starting at 1
+     */
     public void add(T data, int pos) {
         if (pos < 1) {
             throw new IllegalArgumentException("Position in list can not be less than 1");
@@ -63,6 +72,11 @@ public class SLList<T extends Comparable<T>> implements IList<T> {
         }
     }
 
+    /**
+     * Get a node at a specific position
+     * @param pos   The position of the requested element
+     * @return  The element
+     */
     public T get(int pos) {
         if (pos > nrOfElements) {
             throw new IllegalArgumentException("Position out of range");
@@ -81,6 +95,11 @@ public class SLList<T extends Comparable<T>> implements IList<T> {
         return walker.getData();
     }
 
+    /**
+     * Remove a node at a specific position
+     * @param pos   The position of the node to be removed
+     * @return True if the removal succeded else false
+     */
     public boolean remove(int pos) {
         if (pos > nrOfElements) {
             return false;
@@ -90,7 +109,6 @@ public class SLList<T extends Comparable<T>> implements IList<T> {
         if (pos == 1 || pos == 0) {
             if (this.first == this.last) {
                 this.last = null;
-                System.out.println(true);
             }
 
             this.first = this.first.next;
@@ -114,6 +132,10 @@ public class SLList<T extends Comparable<T>> implements IList<T> {
         return true;
     }
 
+    /**
+     * Get the number of elements in the list
+     * @return  Number of elements
+     */
     public int getNrOfElements() {
         return this.nrOfElements;
     }
@@ -123,6 +145,10 @@ public class SLList<T extends Comparable<T>> implements IList<T> {
         this.nrOfElements++;
     }
 
+    /**
+     * Print the list as a string
+     * @return String representation of the list
+     */
     public String toString() {
         String toReturn = "";
 
@@ -135,6 +161,10 @@ public class SLList<T extends Comparable<T>> implements IList<T> {
         return toReturn;
     }
 
+    /**
+     * Iterator for looping through the list
+     * @return  Iterator
+     */
     public Iterator<T> iterator() {
         if (this.nrOfElements == 0) {
             return Collections.<T>emptyList().iterator();
@@ -195,11 +225,27 @@ public class SLList<T extends Comparable<T>> implements IList<T> {
         }
     }
 
+    /**
+     * Get the first node in list
+     * @return First node
+     */
     protected Node getFirst() {
         return this.first;
     }
 
+    /**
+     * Setter of first node
+     * @param node  Node to be first in list
+     */
     protected void setFirst(Node node) {
         this.first = node;
+    }
+
+    /**
+     * Setter of the last node
+     * @param node  Node to be last in the list
+     */
+    protected void setLast(Node node) {
+        this.last = node;
     }
 }

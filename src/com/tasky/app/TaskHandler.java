@@ -85,7 +85,14 @@ public class TaskHandler extends Observable {
         notifyObservers();
     }
 
-    public SLList<Task> getTasks() {
+    public void sortTasks() {
+        this.tasks.sort();
+
+        setChanged();
+        notifyObservers();
+    }
+
+    public SortableList<Task> getTasks() {
         return this.tasks;
     }
 

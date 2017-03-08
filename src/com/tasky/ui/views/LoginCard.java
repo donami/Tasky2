@@ -22,7 +22,7 @@ public class LoginCard extends JPanel {
     private BaseFrame baseFrame;
     private JButton loginButton;
     private TextField usernameTextField;
-    private TextField passwordTextField;
+    private JPasswordField passwordTextField;
     private JLabel welcomeLabel;
 
     public LoginCard(BaseFrame baseFrame) {
@@ -36,7 +36,7 @@ public class LoginCard extends JPanel {
     private void initComponents() {
         this.welcomeLabel = new JLabel("Welcome! Please enter your credentials");
         this.usernameTextField = new TextField();
-        this.passwordTextField = new TextField();
+        this.passwordTextField = new JPasswordField();
         this.loginButton = new JButton("Login");
     }
 
@@ -45,8 +45,10 @@ public class LoginCard extends JPanel {
 
         this.usernameTextField.setPreferredSize(new Dimension(500, 30));
         this.usernameTextField.setMaximumSize(this.usernameTextField.getPreferredSize());
+        this.usernameTextField.setText("user"); // TODO: 2017-03-08 remove line 
         this.passwordTextField.setPreferredSize(new Dimension(500, 30));
         this.passwordTextField.setMaximumSize(this.passwordTextField.getPreferredSize());
+        this.passwordTextField.setText("123");  // TODO: 2017-03-08 remove line 
 
         this.add(this.welcomeLabel, "align center, span");
         this.add(this.usernameTextField, "align center, span");

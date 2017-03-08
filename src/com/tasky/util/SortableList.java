@@ -5,9 +5,11 @@ package com.tasky.util;
  * Created by markus on 2017-03-08.
  */
 public class SortableList<T extends Comparable<T>> extends SLList<T> {
-    public SortableList() {
-    }
+    public SortableList() {}
 
+    /**
+     * Sort the list in ascending order
+     */
     public void sort() {
         Node i = this.getFirst().getNext();
         Node prevI = this.getFirst();
@@ -36,6 +38,7 @@ public class SortableList<T extends Comparable<T>> extends SLList<T> {
             prevI = i;
             i = i.getNext();
         }
+        this.setLast(prevI);
     }
 
 

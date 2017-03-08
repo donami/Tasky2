@@ -21,20 +21,6 @@ public class App {
     private Connection conn;
 
     public App() {
-        SortableList fList = new SortableList();
-//        fList.add(40);
-//        fList.add(2);
-//        fList.add(20);
-        fList.add(new Task("Task1"));
-        fList.add(new Task("Task5"));
-        fList.add(new Task("Task3"));
-
-        System.out.println(fList.toString());
-
-        fList.sort();
-        System.out.println(fList.toString());
-//        fList.filterByName("A");
-
         try {
             this.conn = new MySQLAccess().getConnection();
         } catch (ClassNotFoundException e) {
@@ -48,17 +34,32 @@ public class App {
         this.userDao = new UserDao(this.conn);
     }
 
+    /**
+     * Get auth
+     * @return Auth object if user is authenticated else null
+     */
     public User getAuth() {
         return this.auth;
     }
 
+    /**
+     * Getter for taskhandler
+     * @return  The taskhandler
+     */
     public TaskHandler getTaskHandler() {
         return this.taskHandler;
     }
 
+    /**
+     * Authenticate user with credentials
+     * @param username  The username
+     * @param password  The password
+     * @return  True if authentication was successful else false
+     */
     public boolean login(String username, String password) {
         User user = new User(username, password);
 
+        // If authentication was successful
         if (this.userDao.auth(user)) {
             this.setIsAuthed(true, user);
             return true;
@@ -66,14 +67,27 @@ public class App {
         return false;
     }
 
+    /**
+     * Returns true if user is authenticated else false
+     * @return  True if user is authenticated
+     */
     public boolean isAuthed() {
         return this.isAuthed;
     }
 
+    /**
+     * Set auth and load users task from file, refresh UI
+     * @param isAuthed
+     * @param user
+     */
     private void setIsAuthed(boolean isAuthed, User user) {
         this.isAuthed = isAuthed;
         this.auth = user;
+
+        // Load the tasks from file
         this.taskHandler.loadFromFile();
+
+        // Refresh UI
         this.ui.refreshUI();
     }
 

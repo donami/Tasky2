@@ -17,10 +17,18 @@ public class CardHandler extends JPanel {
         this.setLayout(cardLayout);
     }
 
+    /**
+     * Get the card layout
+     * @return  The card layout
+     */
     public CardLayout getCardLayout() {
         return this.cardLayout;
     }
 
+    /**
+     * Set the card layout
+     * @param cardLayout    The card layout
+     */
     public void setCardLayout(CardLayout cardLayout) {
         this.cardLayout = cardLayout;
     }

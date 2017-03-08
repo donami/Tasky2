@@ -21,6 +21,11 @@ public class UserDao {
         this.connection = connection;
     }
 
+    /**
+     * Try to authenticate the user
+     * @param user  The user to authenticate
+     * @return  True if auth was successful else false
+     */
     public boolean auth(User user) {
         String sql = "SELECT * FROM User WHERE username=? && password=?";
         Boolean validAuth = false;

@@ -23,6 +23,7 @@ public class TaskListCard extends JPanel implements Observer {
     private JLabel titleLabel;
     private JButton deleteTaskButton;
     private JButton addTaskButton;
+    private JButton sortTasksButton;
     private JList taskList;
     private DefaultListModel listModel;
 
@@ -54,10 +55,12 @@ public class TaskListCard extends JPanel implements Observer {
         this.addTaskButton = new JButton("Add task");
         this.deleteTaskButton = new JButton("Remove task");
         this.deleteTaskButton.setEnabled(false);
+        this.sortTasksButton = new JButton("Sort");
     }
 
     private void createGUI() {
         this.add(this.titleLabel, "w 80%");
+        this.add(this.sortTasksButton, "w 10%");
         this.add(this.addTaskButton, "w 10%");
         this.add(this.deleteTaskButton, "w 10%, wrap");
         this.add(this.taskList, "w 100%, h 100%, span, wrap");
@@ -108,6 +111,13 @@ public class TaskListCard extends JPanel implements Observer {
                 if (!e.getValueIsAdjusting()) {
                     deleteTaskButton.setEnabled(true);
                 }
+            }
+        });
+
+        this.sortTasksButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                baseFrame.getApp().getTaskHandler().sortTasks();
             }
         });
     }

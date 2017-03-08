@@ -15,6 +15,9 @@ public class UI {
         this.frame.setVisible(true);
     }
 
+    /**
+     * Refresh the UI to update changes
+     */
     public void refreshUI() {
         this.frame.refresh();
     }
