@@ -18,15 +18,12 @@ public class TaskHandler extends Observable {
     private SortableList<Task> tasks;
     private SortOrder defaultSortingOrder = SortOrder.ASC;
 
+    public enum SortOrder { ASC, DESC }
+
     public TaskHandler(App app) {
         this.app = app;
         this.tasks = new SortableList<>();
     }
-
-    public enum SortOrder {
-        ASC, DESC
-    }
-
 
     /**
      * Get the filename to use based on the users username
@@ -36,6 +33,10 @@ public class TaskHandler extends Observable {
         return Encrypt.encrypt(this.app.getAuth().getUsername()) + ".txt";
     }
 
+    /**
+     * Add a task, and write to file
+     * @param taskName  The name of the task
+     */
     public void addTask(String taskName) {
         // Add the task to the file, appending to previous _tasks
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(this.getFilename(), true))) {
@@ -53,6 +54,9 @@ public class TaskHandler extends Observable {
         notifyObservers(taskName);
     }
 
+    /**
+     * Load tasks from file
+     */
     public void loadFromFile() {
         // Load the _tasks from file to the list
         try {
@@ -72,6 +76,10 @@ public class TaskHandler extends Observable {
         }
     }
 
+    /**
+     * Change task to completed
+     * @param index Index of the task
+     */
     public void setComplete(int index) {
         Task task = this.tasks.get(index);
         task.setCompleted(true);
@@ -79,6 +87,10 @@ public class TaskHandler extends Observable {
         notifyObservers(task.getName());
     }
 
+    /**
+     * Change task to not completed
+     * @param index Index of the task
+     */
     public void setNotComplete(int index) {
         Task task = this.tasks.get(index);
         task.setCompleted(false);
@@ -86,6 +98,10 @@ public class TaskHandler extends Observable {
         notifyObservers(task.getName());
     }
 
+    /**
+     * Delete a task
+     * @param index Index of the task
+     */
     public void deleteTask(int index) {
         // Remove element from list model
         this.tasks.remove(index + 1);
@@ -105,10 +121,17 @@ public class TaskHandler extends Observable {
         notifyObservers();
     }
 
+    /**
+     * Sort tasks in default order
+     */
     public void sortTasks() {
         this.sortTasks(this.defaultSortingOrder);
     }
 
+    /**
+     * Sort tasks in specified order
+     * @param sortingOrder  The order to sort by
+     */
     public void sortTasks(SortOrder sortingOrder) {
         if (sortingOrder == SortOrder.ASC) {
             this.tasks.sort();
@@ -121,6 +144,10 @@ public class TaskHandler extends Observable {
         notifyObservers();
     }
 
+    /**
+     * Getter for the tasks
+     * @return  The tasklist
+     */
     public SortableList<Task> getTasks() {
         return this.tasks;
     }

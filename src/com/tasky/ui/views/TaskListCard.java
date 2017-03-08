@@ -47,7 +47,7 @@ public class TaskListCard extends JPanel implements Observer {
     }
 
     private void initComponents() {
-        this.setLayout(new MigLayout("fill"));
+        this.setLayout(new MigLayout());
 
         this.listModel = new DefaultListModel();
 
@@ -70,14 +70,13 @@ public class TaskListCard extends JPanel implements Observer {
     }
 
     private void createGUI() {
-        this.add(this.titleLabel, "w 80%");
-        this.add(this.sortAscendingButton, "w 10%");
-        this.add(this.sortDescendingButton, "w 10%");
-        this.add(this.setCompleteButton, "w 10%");
-        this.add(this.setNotCompleteButton, "w 10%");
-        this.add(this.addTaskButton, "w 10%");
-        this.add(this.deleteTaskButton, "w 10%, wrap");
+        this.add(this.sortAscendingButton, "align right, gapleft 50%");
+        this.add(this.sortDescendingButton, "align right");
+        this.add(this.addTaskButton, "align right, wrap");
         this.add(this.jScrollPane1, "w 100%, h 100%, span, wrap");
+        this.add(this.setCompleteButton);
+        this.add(this.setNotCompleteButton);
+        this.add(this.deleteTaskButton, "wrap");
     }
 
     private void refreshListModel() {

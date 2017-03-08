@@ -3,6 +3,7 @@ import com.tasky.app.App;
 import com.tasky.app.TaskHandler;
 
 import javax.swing.*;
+import java.awt.*;
 
 /**
  * Created by markus on 2017-03-07.
@@ -12,6 +13,7 @@ public class UI {
 
     public UI(App app) {
         this.frame = new BaseFrame(app);
+        this.frame.setMinimumSize(new Dimension(800, 600));
         this.frame.setVisible(true);
     }
 
