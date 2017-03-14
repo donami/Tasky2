@@ -22,7 +22,6 @@ public class TaskListCard extends JPanel implements Observer {
     final public static String TASK_LIST_CARD = "Task SLList Card";
 
     private BaseFrame baseFrame;
-    private JLabel titleLabel;
     private JButton deleteTaskButton;
     private JButton addTaskButton;
     private JButton sortAscendingButton;
@@ -33,12 +32,12 @@ public class TaskListCard extends JPanel implements Observer {
     private DefaultListModel<Task> listModel;
     private JScrollPane jScrollPane1;
     private JList<Task> taskList;
-    private JPanel panelButtomButtons;
+    private JPanel panelBottomButtons;
 
     public TaskListCard(BaseFrame baseFrame) {
         this.baseFrame = baseFrame;
 
-         this.initComponents();
+        this.initComponents();
         this.createGUI();
         this.addEvents();
     }
@@ -51,7 +50,7 @@ public class TaskListCard extends JPanel implements Observer {
     private void initComponents() {
         this.setLayout(new MigLayout());
 
-        this.listModel = new DefaultListModel();
+        this.listModel = new DefaultListModel<>();
 
         this.taskList = new JList<>();
         this.taskList.setModel(this.listModel);
@@ -61,9 +60,8 @@ public class TaskListCard extends JPanel implements Observer {
 
         this.refreshListModel();
 
-        this.panelButtomButtons = new JPanel();
+        this.panelBottomButtons = new JPanel();
 
-        this.titleLabel = new JLabel("Your tasks");
         this.addTaskButton = new JButton("Add task");
         this.deleteTaskButton = new JButton("Remove task");
         this.deleteTaskButton.setEnabled(false);
@@ -75,16 +73,16 @@ public class TaskListCard extends JPanel implements Observer {
     }
 
     private void createGUI() {
-        this.panelButtomButtons.add(this.setCompleteButton);
-        this.panelButtomButtons.add(this.setNotCompleteButton);
-        this.panelButtomButtons.add(this.editTaskButton);
-        this.panelButtomButtons.add(this.deleteTaskButton);
+        this.panelBottomButtons.add(this.setCompleteButton);
+        this.panelBottomButtons.add(this.setNotCompleteButton);
+        this.panelBottomButtons.add(this.editTaskButton);
+        this.panelBottomButtons.add(this.deleteTaskButton);
 
         this.add(this.sortAscendingButton, "align right, gapleft 50%");
         this.add(this.sortDescendingButton, "align right");
         this.add(this.addTaskButton, "align right, wrap");
         this.add(this.jScrollPane1, "w 100%, h 100%, span, wrap");
-        this.add(this.panelButtomButtons, "span");
+        this.add(this.panelBottomButtons, "span");
     }
 
     private void refreshListModel() {

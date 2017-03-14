@@ -141,6 +141,9 @@ public class TaskHandler extends Observable {
 
         // Update task
         if (this.tasks.update(index, task)) {
+            // Write changes to file
+            this.writeListToFile();
+
             setChanged();
             notifyObservers();
 

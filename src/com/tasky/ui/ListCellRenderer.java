@@ -41,7 +41,8 @@ public class ListCellRenderer extends DefaultListCellRenderer {
             icon = this.createImageIcon("/unchecked.png", "Not completed");
         }
         this.label.setIcon(icon);
-
+        this.label.setPreferredSize(new Dimension(100, 50));
+        this.label.setFont(new Font(this.label.getFont().getName(), Font.PLAIN, 20));
         this.label.setText(task.getName());
 
         if (selected) {

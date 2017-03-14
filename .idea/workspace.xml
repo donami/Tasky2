@@ -2,11 +2,25 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2fe5f66b-32ca-4647-99c2-198ea319ec55" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Tasky2/com/tasky/app/TaskHandler.class" afterPath="$PROJECT_DIR$/out/production/Tasky2/com/tasky/app/TaskHandler.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Tasky2/com/tasky/ui/ListCellRenderer.class" afterPath="$PROJECT_DIR$/out/production/Tasky2/com/tasky/ui/ListCellRenderer.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Tasky2/com/tasky/ui/views/TaskListCard$1.class" afterPath="$PROJECT_DIR$/out/production/Tasky2/com/tasky/ui/views/TaskListCard$1.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Tasky2/com/tasky/ui/views/TaskListCard$2.class" afterPath="$PROJECT_DIR$/out/production/Tasky2/com/tasky/ui/views/TaskListCard$2.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Tasky2/com/tasky/ui/views/TaskListCard$3.class" afterPath="$PROJECT_DIR$/out/production/Tasky2/com/tasky/ui/views/TaskListCard$3.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Tasky2/com/tasky/ui/views/TaskListCard$4.class" afterPath="$PROJECT_DIR$/out/production/Tasky2/com/tasky/ui/views/TaskListCard$4.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Tasky2/com/tasky/ui/views/TaskListCard$5.class" afterPath="$PROJECT_DIR$/out/production/Tasky2/com/tasky/ui/views/TaskListCard$5.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Tasky2/com/tasky/ui/views/TaskListCard$6.class" afterPath="$PROJECT_DIR$/out/production/Tasky2/com/tasky/ui/views/TaskListCard$6.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Tasky2/com/tasky/ui/views/TaskListCard$7.class" afterPath="$PROJECT_DIR$/out/production/Tasky2/com/tasky/ui/views/TaskListCard$7.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Tasky2/com/tasky/ui/views/TaskListCard$8.class" afterPath="$PROJECT_DIR$/out/production/Tasky2/com/tasky/ui/views/TaskListCard$8.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Tasky2/com/tasky/ui/views/TaskListCard.class" afterPath="$PROJECT_DIR$/out/production/Tasky2/com/tasky/ui/views/TaskListCard.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Tasky2/com/tasky/util/SLList$1.class" afterPath="$PROJECT_DIR$/out/production/Tasky2/com/tasky/util/SLList$1.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Tasky2/com/tasky/util/SLList$Node.class" afterPath="$PROJECT_DIR$/out/production/Tasky2/com/tasky/util/SLList$Node.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Tasky2/com/tasky/util/SLList.class" afterPath="$PROJECT_DIR$/out/production/Tasky2/com/tasky/util/SLList.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ee11cbb19052e40b07aac0ca060c23ee.txt" afterPath="$PROJECT_DIR$/ee11cbb19052e40b07aac0ca060c23ee.txt" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/tasky/app/TaskHandler.java" afterPath="$PROJECT_DIR$/src/com/tasky/app/TaskHandler.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/tasky/ui/ListCellRenderer.java" afterPath="$PROJECT_DIR$/src/com/tasky/ui/ListCellRenderer.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/tasky/ui/views/TaskListCard.java" afterPath="$PROJECT_DIR$/src/com/tasky/ui/views/TaskListCard.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/tasky/util/SLList.java" afterPath="$PROJECT_DIR$/src/com/tasky/util/SLList.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -25,8 +39,8 @@
       <file leaf-file-name="TaskListCard.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/tasky/ui/views/TaskListCard.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="369">
-              <caret line="196" column="74" lean-forward="true" selection-start-line="196" selection-start-column="74" selection-end-line="196" selection-end-column="74" />
+            <state relative-caret-position="423">
+              <caret line="64" column="27" lean-forward="false" selection-start-line="64" selection-start-column="27" selection-end-line="64" selection-end-column="27" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -34,11 +48,23 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SLList.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="ListCellRenderer.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/com/tasky/ui/ListCellRenderer.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="386">
+              <caret line="46" column="0" lean-forward="true" selection-start-line="46" selection-start-column="0" selection-end-line="46" selection-end-column="0" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SLList.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/tasky/util/SLList.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="206">
-              <caret line="107" column="0" lean-forward="true" selection-start-line="107" selection-start-column="0" selection-end-line="107" selection-end-column="0" />
+            <state relative-caret-position="62">
+              <caret line="102" column="7" lean-forward="true" selection-start-line="102" selection-start-column="7" selection-end-line="102" selection-end-column="7" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="method#addToEmptyList#0;class#SLList#0" expanded="false" />
@@ -65,14 +91,15 @@
       <file leaf-file-name="TaskHandler.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/tasky/app/TaskHandler.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="319">
-              <caret line="141" column="22" lean-forward="false" selection-start-line="141" selection-start-column="22" selection-end-line="141" selection-end-column="22" />
+            <state relative-caret-position="288">
+              <caret line="16" column="37" lean-forward="true" selection-start-line="16" selection-start-column="37" selection-end-line="16" selection-end-column="37" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="method#addTask#0;class#TaskHandler#0" expanded="false" />
                 <element signature="method#loadFromFile#0;class#TaskHandler#0" expanded="false" />
                 <element signature="method#writeListToFile#0;class#TaskHandler#0" expanded="false" />
                 <element signature="method#setComplete#0;class#TaskHandler#0" expanded="false" />
+                <element signature="method#editTask#0;class#TaskHandler#0" expanded="false" />
                 <element signature="method#sortTasks#1;class#TaskHandler#0" expanded="false" />
               </folding>
             </state>
@@ -148,13 +175,13 @@
         <option value="$PROJECT_DIR$/src/com/tasky/ui/views/LoginCard.java" />
         <option value="$PROJECT_DIR$/src/com/tasky/util/SortableList.java" />
         <option value="$PROJECT_DIR$/src/com/tasky/ui/UI.java" />
-        <option value="$PROJECT_DIR$/src/com/tasky/ui/ListCellRenderer.java" />
         <option value="$PROJECT_DIR$/src/com/tasky/app/models/Task.java" />
         <option value="$PROJECT_DIR$/ee11cbb19052e40b07aac0ca060c23ee.txt" />
         <option value="$PROJECT_DIR$/src/com/tasky/ui/views/HomeCard.java" />
-        <option value="$PROJECT_DIR$/src/com/tasky/ui/views/TaskListCard.java" />
-        <option value="$PROJECT_DIR$/src/com/tasky/app/TaskHandler.java" />
         <option value="$PROJECT_DIR$/src/com/tasky/util/SLList.java" />
+        <option value="$PROJECT_DIR$/src/com/tasky/app/TaskHandler.java" />
+        <option value="$PROJECT_DIR$/src/com/tasky/ui/views/TaskListCard.java" />
+        <option value="$PROJECT_DIR$/src/com/tasky/ui/ListCellRenderer.java" />
       </list>
     </option>
   </component>
@@ -755,6 +782,7 @@
             <element signature="method#loadFromFile#0;class#TaskHandler#0" expanded="false" />
             <element signature="method#writeListToFile#0;class#TaskHandler#0" expanded="false" />
             <element signature="method#setComplete#0;class#TaskHandler#0" expanded="false" />
+            <element signature="method#editTask#0;class#TaskHandler#0" expanded="false" />
             <element signature="method#sortTasks#1;class#TaskHandler#0" expanded="false" />
           </folding>
         </state>
@@ -792,6 +820,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="72">
           <caret line="4" column="0" lean-forward="false" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -805,6 +834,7 @@
             <element signature="method#loadFromFile#0;class#TaskHandler#0" expanded="false" />
             <element signature="method#writeListToFile#0;class#TaskHandler#0" expanded="false" />
             <element signature="method#setComplete#0;class#TaskHandler#0" expanded="false" />
+            <element signature="method#editTask#0;class#TaskHandler#0" expanded="false" />
             <element signature="method#sortTasks#1;class#TaskHandler#0" expanded="false" />
           </folding>
         </state>
@@ -848,6 +878,7 @@
             <element signature="method#loadFromFile#0;class#TaskHandler#0" expanded="false" />
             <element signature="method#writeListToFile#0;class#TaskHandler#0" expanded="false" />
             <element signature="method#setComplete#0;class#TaskHandler#0" expanded="false" />
+            <element signature="method#editTask#0;class#TaskHandler#0" expanded="false" />
             <element signature="method#sortTasks#1;class#TaskHandler#0" expanded="false" />
           </folding>
         </state>
@@ -883,6 +914,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -950,6 +982,7 @@
             <element signature="method#loadFromFile#0;class#TaskHandler#0" expanded="false" />
             <element signature="method#writeListToFile#0;class#TaskHandler#0" expanded="false" />
             <element signature="method#setComplete#0;class#TaskHandler#0" expanded="false" />
+            <element signature="method#editTask#0;class#TaskHandler#0" expanded="false" />
             <element signature="method#sortTasks#1;class#TaskHandler#0" expanded="false" />
           </folding>
         </state>
@@ -959,6 +992,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1063,16 +1097,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/resources.properties" />
-    <entry file="file://$PROJECT_DIR$/src/com/tasky/ui/ListCellRenderer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="710">
-          <caret line="47" column="42" lean-forward="false" selection-start-line="47" selection-start-column="42" selection-end-line="47" selection-end-column="42" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/tasky/ui/BaseFrame.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="18">
@@ -1094,13 +1118,6 @@
         <state relative-caret-position="468">
           <caret line="29" column="43" lean-forward="false" selection-start-line="29" selection-start-column="43" selection-end-line="29" selection-end-column="43" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ee11cbb19052e40b07aac0ca060c23ee.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="18">
-          <caret line="1" column="0" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -1138,41 +1155,60 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/tasky/ui/views/TaskListCard.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="369">
-          <caret line="196" column="74" lean-forward="true" selection-start-line="196" selection-start-column="74" selection-end-line="196" selection-end-column="74" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/tasky/app/TaskHandler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="319">
-          <caret line="141" column="22" lean-forward="false" selection-start-line="141" selection-start-column="22" selection-end-line="141" selection-end-column="22" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#addTask#0;class#TaskHandler#0" expanded="false" />
-            <element signature="method#loadFromFile#0;class#TaskHandler#0" expanded="false" />
-            <element signature="method#writeListToFile#0;class#TaskHandler#0" expanded="false" />
-            <element signature="method#setComplete#0;class#TaskHandler#0" expanded="false" />
-            <element signature="method#sortTasks#1;class#TaskHandler#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/tasky/util/SLList.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="206">
-          <caret line="107" column="0" lean-forward="true" selection-start-line="107" selection-start-column="0" selection-end-line="107" selection-end-column="0" />
+        <state relative-caret-position="62">
+          <caret line="102" column="7" lean-forward="true" selection-start-line="102" selection-start-column="7" selection-end-line="102" selection-end-column="7" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#addToEmptyList#0;class#SLList#0" expanded="false" />
             <element signature="method#toString#0;class#SLList#0" expanded="false" />
             <element signature="method#iterator#0;class#SLList#0" expanded="false" />
             <element signature="class#Node#0;class#SLList#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ee11cbb19052e40b07aac0ca060c23ee.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="18">
+          <caret line="1" column="0" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/tasky/app/TaskHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="288">
+          <caret line="16" column="37" lean-forward="true" selection-start-line="16" selection-start-column="37" selection-end-line="16" selection-end-column="37" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#addTask#0;class#TaskHandler#0" expanded="false" />
+            <element signature="method#loadFromFile#0;class#TaskHandler#0" expanded="false" />
+            <element signature="method#writeListToFile#0;class#TaskHandler#0" expanded="false" />
+            <element signature="method#setComplete#0;class#TaskHandler#0" expanded="false" />
+            <element signature="method#editTask#0;class#TaskHandler#0" expanded="false" />
+            <element signature="method#sortTasks#1;class#TaskHandler#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/tasky/ui/views/TaskListCard.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="423">
+          <caret line="64" column="27" lean-forward="false" selection-start-line="64" selection-start-column="27" selection-end-line="64" selection-end-column="27" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/tasky/ui/ListCellRenderer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="386">
+          <caret line="46" column="0" lean-forward="true" selection-start-line="46" selection-start-column="0" selection-end-line="46" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
