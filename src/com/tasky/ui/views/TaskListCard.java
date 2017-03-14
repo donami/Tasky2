@@ -29,9 +29,11 @@ public class TaskListCard extends JPanel implements Observer {
     private JButton sortDescendingButton;
     private JButton setCompleteButton;
     private JButton setNotCompleteButton;
+    private JButton editTaskButton;
     private DefaultListModel<Task> listModel;
     private JScrollPane jScrollPane1;
     private JList<Task> taskList;
+    private JPanel panelButtomButtons;
 
     public TaskListCard(BaseFrame baseFrame) {
         this.baseFrame = baseFrame;
@@ -59,6 +61,8 @@ public class TaskListCard extends JPanel implements Observer {
 
         this.refreshListModel();
 
+        this.panelButtomButtons = new JPanel();
+
         this.titleLabel = new JLabel("Your tasks");
         this.addTaskButton = new JButton("Add task");
         this.deleteTaskButton = new JButton("Remove task");
@@ -67,16 +71,20 @@ public class TaskListCard extends JPanel implements Observer {
         this.sortDescendingButton = new JButton("Sort descending");
         this.setCompleteButton = new JButton("Mark as completed");
         this.setNotCompleteButton = new JButton("Mark as not complete");
+        this.editTaskButton = new JButton("Edit");
     }
 
     private void createGUI() {
+        this.panelButtomButtons.add(this.setCompleteButton);
+        this.panelButtomButtons.add(this.setNotCompleteButton);
+        this.panelButtomButtons.add(this.editTaskButton);
+        this.panelButtomButtons.add(this.deleteTaskButton);
+
         this.add(this.sortAscendingButton, "align right, gapleft 50%");
         this.add(this.sortDescendingButton, "align right");
         this.add(this.addTaskButton, "align right, wrap");
         this.add(this.jScrollPane1, "w 100%, h 100%, span, wrap");
-        this.add(this.setCompleteButton);
-        this.add(this.setNotCompleteButton);
-        this.add(this.deleteTaskButton, "wrap");
+        this.add(this.panelButtomButtons, "span");
     }
 
     private void refreshListModel() {
@@ -155,6 +163,43 @@ public class TaskListCard extends JPanel implements Observer {
             public void actionPerformed(ActionEvent e) {
                 if (taskList.getSelectedIndex() > -1) {
                     baseFrame.getApp().getTaskHandler().setComplete(taskList.getSelectedIndex() + 1, false);
+                }
+            }
+        });
+
+        this.editTaskButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (taskList.getSelectedIndex() > -1) {
+
+                    Task selectedTask = taskList.getSelectedValue();
+
+                    JTextField taskNameInput = new JTextField(selectedTask.getName());
+                    JCheckBox completed = new JCheckBox();
+
+                    if (selectedTask.getCompleted()) {
+                        completed.setSelected(true);
+                    }
+
+                    JPanel dialogPanel = new JPanel();
+                    dialogPanel.setLayout(new MigLayout());
+
+                    dialogPanel.add(new JLabel("Task name"));
+                    dialogPanel.add(taskNameInput, "w 100%, wrap");
+                    dialogPanel.add(new JLabel("Completed"));
+                    dialogPanel.add(completed, "wrap");
+
+
+                    int result = JOptionPane.showConfirmDialog(baseFrame, dialogPanel, "Enter new data", JOptionPane.OK_CANCEL_OPTION);
+
+                    if (result == JOptionPane.OK_OPTION) {
+                        selectedTask.setName(taskNameInput.getText());
+                        selectedTask.setCompleted(completed.isSelected());
+
+                        if (selectedTask.getName() != null) {
+                            baseFrame.getApp().getTaskHandler().editTask(taskList.getSelectedIndex() + 1, selectedTask);
+                        }
+                    }
                 }
             }
         });

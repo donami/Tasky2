@@ -96,6 +96,33 @@ public class SLList<T extends Comparable<T>> implements IList<T> {
     }
 
     /**
+     * Update a node at specific position
+     * @param pos   The position of the node to be changed
+     * @param data  New element to take its place
+     * @return  True if action was successful
+     */
+    public boolean update(int pos, T data) {
+        if (pos > nrOfElements) {
+            throw new IllegalArgumentException("Position out of range");
+        }
+
+        // If element is the first
+        if (pos == 1 || pos == 0) {
+            this.first.setData(data);
+        }
+
+        Node walker = this.first;
+        for (int i = 0; i < pos - 1; i++) {
+            walker = walker.next;
+        }
+
+        // Update data
+        walker.setData(data);
+
+        return true;
+    }
+
+    /**
      * Remove a node at a specific position
      * @param pos   The position of the node to be removed
      * @return True if the removal succeded else false
@@ -140,6 +167,10 @@ public class SLList<T extends Comparable<T>> implements IList<T> {
         return this.nrOfElements;
     }
 
+    /**
+     * Add element to empty list
+     * @param data  The element
+     */
     private void addToEmptyList(T data) {
         this.first = this.last = new Node(data);
         this.nrOfElements++;

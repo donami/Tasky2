@@ -132,6 +132,26 @@ public class TaskHandler extends Observable {
     }
 
     /**
+     * Edit a task
+     * @param index Index of the task
+     * @param task  New task data
+     * @return  True if action was successful
+     */
+    public boolean editTask(int index, Task task) {
+
+        // Update task
+        if (this.tasks.update(index, task)) {
+            setChanged();
+            notifyObservers();
+
+            return true;
+        }
+
+
+        return false;
+    }
+
+    /**
      * Sort tasks in default order
      */
     public void sortTasks() {
