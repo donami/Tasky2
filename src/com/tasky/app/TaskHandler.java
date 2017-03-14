@@ -3,7 +3,6 @@ package com.tasky.app;
 import com.tasky.app.models.Task;
 import com.tasky.util.Encrypt;
 import com.tasky.util.SortableList;
-import com.tasky.util.SLList;
 
 import java.io.*;
 import java.util.Iterator;
@@ -67,7 +66,13 @@ public class TaskHandler extends Observable {
                 BufferedReader bufferedReader = new BufferedReader(fileReader);
                 String line;
                 while ((line = bufferedReader.readLine()) != null) {
-                    this.tasks.add(new Task(line));
+                    if (line.contains(":completed")) {
+                        String[] parts = line.split(":");
+                        this.tasks.add(new Task(parts[0], true));
+                    }
+                    else {
+                        this.tasks.add(new Task(line));
+                    }
                 }
                 fileReader.close();
             }
@@ -77,23 +82,37 @@ public class TaskHandler extends Observable {
     }
 
     /**
-     * Change task to completed
-     * @param index Index of the task
+     * Write the current list to file
      */
-    public void setComplete(int index) {
-        Task task = this.tasks.get(index);
-        task.setCompleted(true);
-        setChanged();
-        notifyObservers(task.getName());
+    private void writeListToFile() {
+        // Write the tasks to the files, overwriting the old file
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(this.getFilename()))) {
+            Iterator<Task> listIterator = this.tasks.iterator();
+            while (listIterator.hasNext()) {
+                Task next = listIterator.next();
+                if (next.getCompleted()) {
+                    bw.write(next + ":completed\n");
+                }
+                else {
+                    bw.write(next + "\n");
+                }
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
-     * Change task to not completed
+     * Change task to completed
      * @param index Index of the task
      */
-    public void setNotComplete(int index) {
+    public void setComplete(int index, boolean complete) {
         Task task = this.tasks.get(index);
-        task.setCompleted(false);
+        task.setCompleted(complete);
+
+        this.writeListToFile();
+
         setChanged();
         notifyObservers(task.getName());
     }
@@ -106,16 +125,7 @@ public class TaskHandler extends Observable {
         // Remove element from list model
         this.tasks.remove(index + 1);
 
-        // Write the _tasks to the files, overwriting the old file
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(this.getFilename()))) {
-            Iterator<Task> listIterator = this.tasks.iterator();
-            while (listIterator.hasNext()) {
-                bw.write(listIterator.next() + "\n");
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        this.writeListToFile();
 
         setChanged();
         notifyObservers();

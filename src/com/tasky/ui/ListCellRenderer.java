@@ -12,14 +12,14 @@ import java.net.URL;
 public class ListCellRenderer extends DefaultListCellRenderer {
 
     private JLabel label;
-    private Color textSelectionColor = Color.BLACK;
-    private Color backgroundSelectionColor = Color.CYAN;
+    private Color textSelectionColor = Color.WHITE;
+    private Color backgroundSelectionColor = new Color(95, 186, 125);
     private Color textNonSelectionColor = Color.BLACK;
     private Color backgroundNonSelectionColor = Color.WHITE;
 
     public ListCellRenderer() {
-        label = new JLabel();
-        label.setOpaque(true);
+        this.label = new JLabel();
+        this.label.setOpaque(true);
     }
 
     @Override
@@ -30,27 +30,26 @@ public class ListCellRenderer extends DefaultListCellRenderer {
             boolean selected,
             boolean expanded) {
 
-
         Task task = (Task) value;
 
+        ImageIcon icon;
         // Set icon depending on whether or not the task is completed
         if (task.getCompleted()) {
-            ImageIcon icon = createImageIcon("/checked.png", "Completed");
-            label.setIcon(icon);
+            icon = this.createImageIcon("/checked.png", "Completed");
         }
         else {
-            ImageIcon icon = createImageIcon("/unchecked.png", "Not completed");
-            label.setIcon(icon);
+            icon = this.createImageIcon("/unchecked.png", "Not completed");
         }
+        this.label.setIcon(icon);
 
-        label.setText(task.getName());
+        this.label.setText(task.getName());
 
         if (selected) {
-            label.setBackground(backgroundSelectionColor);
-            label.setForeground(textSelectionColor);
+            label.setBackground(this.backgroundSelectionColor);
+            label.setForeground(this.textSelectionColor);
         } else {
-            label.setBackground(backgroundNonSelectionColor);
-            label.setForeground(textNonSelectionColor);
+            label.setBackground(this.backgroundNonSelectionColor);
+            label.setForeground(this.textNonSelectionColor);
         }
 
         return label;

@@ -145,7 +145,7 @@ public class TaskListCard extends JPanel implements Observer {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (taskList.getSelectedIndex() > -1) {
-                    baseFrame.getApp().getTaskHandler().setComplete(taskList.getSelectedIndex() + 1);
+                    baseFrame.getApp().getTaskHandler().setComplete(taskList.getSelectedIndex() + 1, true);
                 }
             }
         });
@@ -154,7 +154,7 @@ public class TaskListCard extends JPanel implements Observer {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (taskList.getSelectedIndex() > -1) {
-                    baseFrame.getApp().getTaskHandler().setNotComplete(taskList.getSelectedIndex() + 1);
+                    baseFrame.getApp().getTaskHandler().setComplete(taskList.getSelectedIndex() + 1, false);
                 }
             }
         });

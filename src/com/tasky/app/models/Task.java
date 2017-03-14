@@ -12,6 +12,11 @@ public class Task implements Comparable<Task>{
         this.completed = false;
     }
 
+    public Task(String name, boolean completed) {
+        this.name = name;
+        this.completed = completed;
+    }
+
     public String getName() {
         return name;
     }
