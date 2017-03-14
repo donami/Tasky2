@@ -32,6 +32,7 @@ public class BaseFrame extends JFrame {
     }
 
     private void createGUI() {
+        this.setTitle("Tasky Task Manager");
         this.setSize(800, 600);
         this.add(this.cardHandler);
         if (this.isAuthed()) {

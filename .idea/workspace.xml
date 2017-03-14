@@ -2,23 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2fe5f66b-32ca-4647-99c2-198ea319ec55" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Tasky2/com/tasky/app/TaskHandler.class" afterPath="$PROJECT_DIR$/out/production/Tasky2/com/tasky/app/TaskHandler.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Tasky2/com/tasky/ui/ListCellRenderer.class" afterPath="$PROJECT_DIR$/out/production/Tasky2/com/tasky/ui/ListCellRenderer.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Tasky2/com/tasky/ui/views/TaskListCard$1.class" afterPath="$PROJECT_DIR$/out/production/Tasky2/com/tasky/ui/views/TaskListCard$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Tasky2/com/tasky/ui/views/TaskListCard$2.class" afterPath="$PROJECT_DIR$/out/production/Tasky2/com/tasky/ui/views/TaskListCard$2.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Tasky2/com/tasky/ui/views/TaskListCard$3.class" afterPath="$PROJECT_DIR$/out/production/Tasky2/com/tasky/ui/views/TaskListCard$3.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Tasky2/com/tasky/ui/views/TaskListCard$4.class" afterPath="$PROJECT_DIR$/out/production/Tasky2/com/tasky/ui/views/TaskListCard$4.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Tasky2/com/tasky/ui/views/TaskListCard$5.class" afterPath="$PROJECT_DIR$/out/production/Tasky2/com/tasky/ui/views/TaskListCard$5.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Tasky2/com/tasky/ui/views/TaskListCard$6.class" afterPath="$PROJECT_DIR$/out/production/Tasky2/com/tasky/ui/views/TaskListCard$6.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Tasky2/com/tasky/ui/views/TaskListCard$7.class" afterPath="$PROJECT_DIR$/out/production/Tasky2/com/tasky/ui/views/TaskListCard$7.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Tasky2/com/tasky/ui/views/TaskListCard$8.class" afterPath="$PROJECT_DIR$/out/production/Tasky2/com/tasky/ui/views/TaskListCard$8.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Tasky2/com/tasky/ui/views/TaskListCard.class" afterPath="$PROJECT_DIR$/out/production/Tasky2/com/tasky/ui/views/TaskListCard.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Tasky2/com/tasky/util/SLList$1.class" afterPath="$PROJECT_DIR$/out/production/Tasky2/com/tasky/util/SLList$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Tasky2/com/tasky/util/SLList$Node.class" afterPath="$PROJECT_DIR$/out/production/Tasky2/com/tasky/util/SLList$Node.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Tasky2/com/tasky/util/SLList.class" afterPath="$PROJECT_DIR$/out/production/Tasky2/com/tasky/util/SLList.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Tasky2/com/tasky/ui/views/TaskListCard$8.class" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ee11cbb19052e40b07aac0ca060c23ee.txt" afterPath="$PROJECT_DIR$/ee11cbb19052e40b07aac0ca060c23ee.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/tasky/app/TaskHandler.java" afterPath="$PROJECT_DIR$/src/com/tasky/app/TaskHandler.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/tasky/ui/BaseFrame.java" afterPath="$PROJECT_DIR$/src/com/tasky/ui/BaseFrame.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/tasky/ui/ListCellRenderer.java" afterPath="$PROJECT_DIR$/src/com/tasky/ui/ListCellRenderer.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/tasky/ui/views/TaskListCard.java" afterPath="$PROJECT_DIR$/src/com/tasky/ui/views/TaskListCard.java" />
     </list>
@@ -39,8 +25,8 @@
       <file leaf-file-name="TaskListCard.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/tasky/ui/views/TaskListCard.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="423">
-              <caret line="64" column="27" lean-forward="false" selection-start-line="64" selection-start-column="27" selection-end-line="64" selection-end-column="27" />
+            <state relative-caret-position="139">
+              <caret line="69" column="44" lean-forward="true" selection-start-line="69" selection-start-column="44" selection-end-line="69" selection-end-column="44" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -48,11 +34,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ListCellRenderer.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="BaseFrame.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/com/tasky/ui/BaseFrame.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="90">
+              <caret line="20" column="35" lean-forward="false" selection-start-line="20" selection-start-column="35" selection-end-line="20" selection-end-column="35" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ListCellRenderer.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/tasky/ui/ListCellRenderer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="386">
-              <caret line="46" column="0" lean-forward="true" selection-start-line="46" selection-start-column="0" selection-end-line="46" selection-end-column="0" />
+            <state relative-caret-position="134">
+              <caret line="29" column="29" lean-forward="true" selection-start-line="29" selection-start-column="29" selection-end-line="29" selection-end-column="29" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -139,6 +135,7 @@
       <find>taskList</find>
       <find>write</find>
       <find>borderlayout</find>
+      <find>descen</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -159,7 +156,6 @@
       <list>
         <option value="$PROJECT_DIR$/src/com/tasky/db/MySQLAccess.java" />
         <option value="$PROJECT_DIR$/src/com/tasky/app/models/User.java" />
-        <option value="$PROJECT_DIR$/src/com/tasky/ui/BaseFrame.java" />
         <option value="$PROJECT_DIR$/src/com/tasky/ui/views/AboutCard.java" />
         <option value="$PROJECT_DIR$/src/com/tasky/util/Subject.java" />
         <option value="$PROJECT_DIR$/src/com/tasky/util/Observer.java" />
@@ -180,8 +176,9 @@
         <option value="$PROJECT_DIR$/src/com/tasky/ui/views/HomeCard.java" />
         <option value="$PROJECT_DIR$/src/com/tasky/util/SLList.java" />
         <option value="$PROJECT_DIR$/src/com/tasky/app/TaskHandler.java" />
-        <option value="$PROJECT_DIR$/src/com/tasky/ui/views/TaskListCard.java" />
         <option value="$PROJECT_DIR$/src/com/tasky/ui/ListCellRenderer.java" />
+        <option value="$PROJECT_DIR$/src/com/tasky/ui/views/TaskListCard.java" />
+        <option value="$PROJECT_DIR$/src/com/tasky/ui/BaseFrame.java" />
       </list>
     </option>
   </component>
@@ -1097,14 +1094,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/resources.properties" />
-    <entry file="file://$PROJECT_DIR$/src/com/tasky/ui/BaseFrame.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="18">
-          <caret line="10" column="3" lean-forward="false" selection-start-line="10" selection-start-column="3" selection-end-line="10" selection-end-column="3" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/tasky/ui/UI.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="198">
@@ -1193,23 +1182,31 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/tasky/ui/views/TaskListCard.java">
+    <entry file="file://$PROJECT_DIR$/src/com/tasky/ui/ListCellRenderer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="423">
-          <caret line="64" column="27" lean-forward="false" selection-start-line="64" selection-start-column="27" selection-end-line="64" selection-end-column="27" />
+        <state relative-caret-position="134">
+          <caret line="29" column="29" lean-forward="true" selection-start-line="29" selection-start-column="29" selection-end-line="29" selection-end-column="29" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/tasky/ui/ListCellRenderer.java">
+    <entry file="file://$PROJECT_DIR$/src/com/tasky/ui/views/TaskListCard.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="386">
-          <caret line="46" column="0" lean-forward="true" selection-start-line="46" selection-start-column="0" selection-end-line="46" selection-end-column="0" />
+        <state relative-caret-position="139">
+          <caret line="69" column="44" lean-forward="true" selection-start-line="69" selection-start-column="44" selection-end-line="69" selection-end-column="44" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/tasky/ui/BaseFrame.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="20" column="35" lean-forward="false" selection-start-line="20" selection-start-column="35" selection-end-line="20" selection-end-column="35" />
+          <folding />
         </state>
       </provider>
     </entry>

@@ -8,6 +8,7 @@ import net.miginfocom.swing.MigLayout;
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Iterator;
@@ -24,15 +25,16 @@ public class TaskListCard extends JPanel implements Observer {
     private BaseFrame baseFrame;
     private JButton deleteTaskButton;
     private JButton addTaskButton;
-    private JButton sortAscendingButton;
-    private JButton sortDescendingButton;
+    private JButton sortButton;
     private JButton setCompleteButton;
     private JButton setNotCompleteButton;
     private JButton editTaskButton;
+    private JComboBox<String> sortOrderComboBox;
     private DefaultListModel<Task> listModel;
     private JScrollPane jScrollPane1;
     private JList<Task> taskList;
     private JPanel panelBottomButtons;
+    private JPanel panelTopButtons;
 
     public TaskListCard(BaseFrame baseFrame) {
         this.baseFrame = baseFrame;
@@ -61,28 +63,45 @@ public class TaskListCard extends JPanel implements Observer {
         this.refreshListModel();
 
         this.panelBottomButtons = new JPanel();
+        this.panelBottomButtons.setLayout(new BoxLayout(this.panelBottomButtons, BoxLayout.LINE_AXIS));
+        this.panelBottomButtons.setBorder(BorderFactory.createEmptyBorder(5, 0, 5, 0));
+
+
+        this.panelTopButtons = new JPanel();
+        this.panelTopButtons.setLayout(new BoxLayout(this.panelTopButtons, BoxLayout.LINE_AXIS));
+        this.panelTopButtons.setBorder(BorderFactory.createEmptyBorder(5, 0, 5, 0));
 
         this.addTaskButton = new JButton("Add task");
         this.deleteTaskButton = new JButton("Remove task");
         this.deleteTaskButton.setEnabled(false);
-        this.sortAscendingButton = new JButton("Sort");
-        this.sortDescendingButton = new JButton("Sort descending");
+        this.sortButton = new JButton("Sort");
         this.setCompleteButton = new JButton("Mark as completed");
         this.setNotCompleteButton = new JButton("Mark as not complete");
         this.editTaskButton = new JButton("Edit");
+
+        String[] availableSortOrders = { "Ascending", "Descending" };
+        this.sortOrderComboBox = new JComboBox<>(availableSortOrders);
+        this.sortOrderComboBox.setMaximumSize(new Dimension(80, 50));
     }
 
     private void createGUI() {
-        this.panelBottomButtons.add(this.setCompleteButton);
-        this.panelBottomButtons.add(this.setNotCompleteButton);
         this.panelBottomButtons.add(this.editTaskButton);
+        this.panelBottomButtons.add(Box.createRigidArea(new Dimension(10, 0)));
         this.panelBottomButtons.add(this.deleteTaskButton);
+        this.panelBottomButtons.add(Box.createHorizontalGlue());
+        this.panelBottomButtons.add(this.setCompleteButton);
+        this.panelBottomButtons.add(Box.createRigidArea(new Dimension(10, 0)));
+        this.panelBottomButtons.add(this.setNotCompleteButton);
 
-        this.add(this.sortAscendingButton, "align right, gapleft 50%");
-        this.add(this.sortDescendingButton, "align right");
-        this.add(this.addTaskButton, "align right, wrap");
+        this.panelTopButtons.add(this.addTaskButton);
+        this.panelTopButtons.add(Box.createHorizontalGlue());
+        this.panelTopButtons.add(this.sortOrderComboBox);
+        this.panelTopButtons.add(Box.createRigidArea(new Dimension(10, 0)));
+        this.panelTopButtons.add(this.sortButton);
+
+        this.add(this.panelTopButtons, "w 100%, span, wrap");
         this.add(this.jScrollPane1, "w 100%, h 100%, span, wrap");
-        this.add(this.panelBottomButtons, "span");
+        this.add(this.panelBottomButtons, "w 100%, span, wrap");
     }
 
     private void refreshListModel() {
@@ -133,17 +152,20 @@ public class TaskListCard extends JPanel implements Observer {
             }
         });
 
-        this.sortAscendingButton.addActionListener(new ActionListener() {
+        this.sortButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                baseFrame.getApp().getTaskHandler().sortTasks(TaskHandler.SortOrder.ASC);
-            }
-        });
+                switch (sortOrderComboBox.getSelectedIndex()) {
+                    case 0:
+                        baseFrame.getApp().getTaskHandler().sortTasks(TaskHandler.SortOrder.ASC);
+                        break;
+                    case 1:
+                        baseFrame.getApp().getTaskHandler().sortTasks(TaskHandler.SortOrder.DESC);
+                        break;
+                    default:
+                        baseFrame.getApp().getTaskHandler().sortTasks();
 
-        this.sortDescendingButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                baseFrame.getApp().getTaskHandler().sortTasks(TaskHandler.SortOrder.DESC);
+                }
             }
         });
 
