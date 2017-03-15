@@ -1,15 +1,20 @@
 package com.tasky.app.models;
 
+import java.io.Serializable;
+import java.util.Date;
+
 /**
  * Created by markus on 2017-02-28.
  */
-public class Task implements Comparable<Task>{
+public class Task implements Comparable<Task>, Serializable {
     private String name;
     private Boolean completed;
+    private Date dueDate;
 
     public Task(String name) {
         this.name = name;
         this.completed = false;
+        this.dueDate = null;
     }
 
     public Task(String name, boolean completed) {
@@ -31,6 +36,14 @@ public class Task implements Comparable<Task>{
 
     public void setCompleted(Boolean completed) {
         this.completed = completed;
+    }
+
+    public void setDueDate(Date dueDate) {
+        this.dueDate = dueDate;
+    }
+
+    public Date getDueDate() {
+        return this.dueDate;
     }
 
     @Override

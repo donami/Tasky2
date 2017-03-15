@@ -1,6 +1,8 @@
 package com.tasky.util;
 
 
+import java.io.Serializable;
+
 /**
  * Created by markus on 2017-03-08.
  */

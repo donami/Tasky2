@@ -5,15 +5,21 @@ import com.tasky.app.models.Task;
 import com.tasky.ui.BaseFrame;
 import com.tasky.ui.ListCellRenderer;
 import net.miginfocom.swing.MigLayout;
+import org.apache.commons.lang.time.DateUtils;
+import org.jdatepicker.JDatePicker;
+import org.jdatepicker.impl.JDatePanelImpl;
+import org.jdatepicker.impl.JDatePickerImpl;
+import org.jdatepicker.impl.SqlDateModel;
+import org.jdatepicker.impl.UtilDateModel;
+
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Iterator;
-import java.util.Observable;
-import java.util.Observer;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * Created by markus on 2017-02-28.
@@ -29,6 +35,7 @@ public class TaskListCard extends JPanel implements Observer {
     private JButton setCompleteButton;
     private JButton setNotCompleteButton;
     private JButton editTaskButton;
+    private JButton clearTasksButton;
     private JComboBox<String> sortOrderComboBox;
     private DefaultListModel<Task> listModel;
     private JScrollPane jScrollPane1;
@@ -78,6 +85,7 @@ public class TaskListCard extends JPanel implements Observer {
         this.setCompleteButton = new JButton("Mark as completed");
         this.setNotCompleteButton = new JButton("Mark as not complete");
         this.editTaskButton = new JButton("Edit");
+        this.clearTasksButton = new JButton("Clear all");
 
         String[] availableSortOrders = { "Ascending", "Descending" };
         this.sortOrderComboBox = new JComboBox<>(availableSortOrders);
@@ -88,6 +96,8 @@ public class TaskListCard extends JPanel implements Observer {
         this.panelBottomButtons.add(this.editTaskButton);
         this.panelBottomButtons.add(Box.createRigidArea(new Dimension(10, 0)));
         this.panelBottomButtons.add(this.deleteTaskButton);
+        this.panelBottomButtons.add(Box.createHorizontalGlue());
+        this.panelBottomButtons.add(this.clearTasksButton);
         this.panelBottomButtons.add(Box.createHorizontalGlue());
         this.panelBottomButtons.add(this.setCompleteButton);
         this.panelBottomButtons.add(Box.createRigidArea(new Dimension(10, 0)));
@@ -187,15 +197,39 @@ public class TaskListCard extends JPanel implements Observer {
             }
         });
 
+        this.clearTasksButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                baseFrame.getApp().getTaskHandler().clear();
+            }
+        });
+
         this.editTaskButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (taskList.getSelectedIndex() > -1) {
-
                     Task selectedTask = taskList.getSelectedValue();
 
                     JTextField taskNameInput = new JTextField(selectedTask.getName());
                     JCheckBox completed = new JCheckBox();
+                    JComboBox<Date> dateComboBox = new JComboBox<>();
+
+                    GregorianCalendar calendar = new GregorianCalendar();
+                    dateComboBox.addItem(calendar.getTime());
+
+                    // Add dates to the combo box
+                    for (int i = 0; i < 30; i++) {
+                        calendar.roll(GregorianCalendar.DAY_OF_YEAR, 1);
+                        dateComboBox.addItem(calendar.getTime());
+
+                        // If there already is a due date, select it
+                        if (selectedTask.getDueDate() != null &&
+                            DateUtils.isSameDay(selectedTask.getDueDate(), calendar.getTime()))
+                        {
+                            dateComboBox.setSelectedItem(calendar.getTime());
+                        }
+                    }
+                    dateComboBox.setRenderer(new DateComboBoxRenderer());
 
                     if (selectedTask.getCompleted()) {
                         completed.setSelected(true);
@@ -206,14 +240,17 @@ public class TaskListCard extends JPanel implements Observer {
 
                     dialogPanel.add(new JLabel("Task name"));
                     dialogPanel.add(taskNameInput, "w 100%, wrap");
+                    dialogPanel.add(new JLabel("Due date"));
+                    dialogPanel.add(dateComboBox, "wrap");
                     dialogPanel.add(new JLabel("Completed"));
                     dialogPanel.add(completed, "wrap");
 
-
-                    int result = JOptionPane.showConfirmDialog(baseFrame, dialogPanel, "Enter new data", JOptionPane.OK_CANCEL_OPTION);
+                    int result = JOptionPane.showConfirmDialog(baseFrame, dialogPanel, "Edit task", JOptionPane.OK_CANCEL_OPTION);
 
                     if (result == JOptionPane.OK_OPTION) {
+                        System.out.println(dateComboBox.getSelectedItem());
                         selectedTask.setName(taskNameInput.getText());
+                        selectedTask.setDueDate((Date) dateComboBox.getSelectedItem());
                         selectedTask.setCompleted(completed.isSelected());
 
                         if (selectedTask.getName() != null) {
@@ -223,6 +260,24 @@ public class TaskListCard extends JPanel implements Observer {
                 }
             }
         });
+    }
+
+    // Create Date Renderer for formatting Date
+    public static class DateComboBoxRenderer extends DefaultListCellRenderer {
+
+        // desired format for the date
+        private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+        public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+            Object item = value;
+
+            // if the item to be rendered is date then format it
+            if (item instanceof Date) {
+                item = dateFormat.format((Date) item);
+            }
+
+            return super.getListCellRendererComponent(list, item, index, isSelected, cellHasFocus);
+        }
     }
 
 }

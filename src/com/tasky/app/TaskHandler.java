@@ -29,7 +29,7 @@ public class TaskHandler extends Observable {
      * @return String   Filename
      */
     private String getFilename() {
-        return Encrypt.encrypt(this.app.getAuth().getUsername()) + ".txt";
+        return Encrypt.encrypt(this.app.getAuth().getUsername()) + ".ser";
     }
 
     /**
@@ -37,18 +37,12 @@ public class TaskHandler extends Observable {
      * @param taskName  The name of the task
      */
     public void addTask(String taskName) {
-        // Add the task to the file, appending to previous _tasks
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(this.getFilename(), true))) {
-
-            String content = taskName + "\n";
-
-            bw.write(content);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+        // Add the task to the list
         this.tasks.add(new Task(taskName));
+
+        // Write changes to file
+        this.writeListToFile();
+
         setChanged();
         notifyObservers(taskName);
     }
@@ -56,48 +50,54 @@ public class TaskHandler extends Observable {
     /**
      * Load tasks from file
      */
-    public void loadFromFile() {
-        // Load the _tasks from file to the list
-        try {
-            File file = new File(this.getFilename());
+    public void loadFromFile() throws Exception {
+        File file = new File(this.getFilename());
 
-            if(file.exists() && !file.isDirectory()) {
-                FileReader fileReader = new FileReader(file);
-                BufferedReader bufferedReader = new BufferedReader(fileReader);
-                String line;
-                while ((line = bufferedReader.readLine()) != null) {
-                    if (line.contains(":completed")) {
-                        String[] parts = line.split(":");
-                        this.tasks.add(new Task(parts[0], true));
-                    }
-                    else {
-                        this.tasks.add(new Task(line));
-                    }
+        if (file.exists() && !file.isDirectory()) {
+            // Load the tasks from file to the list
+            ObjectInputStream ois = null;
+            try {
+                ois = new ObjectInputStream(new FileInputStream(this.getFilename()));
+                while (true) {
+                    Task task = (Task) ois.readObject();
+                    this.tasks.add(task);
                 }
-                fileReader.close();
+            } catch (EOFException e) {
+
+            } finally {
+                if (ois != null) {
+                    ois.close();
+                }
             }
-        } catch (IOException e) {
-            e.printStackTrace();
         }
+    }
+
+    /**
+     * Remove all tasks from list
+     */
+    public void clear() {
+        this.tasks.clear();
+
+        this.writeListToFile();
+
+        setChanged();
+        notifyObservers();
     }
 
     /**
      * Write the current list to file
      */
     private void writeListToFile() {
-        // Write the tasks to the files, overwriting the old file
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(this.getFilename()))) {
+        // Write the tasks to the files
+        try {
+            ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream(this.getFilename()));
+
             Iterator<Task> listIterator = this.tasks.iterator();
             while (listIterator.hasNext()) {
-                Task next = listIterator.next();
-                if (next.getCompleted()) {
-                    bw.write(next + ":completed\n");
-                }
-                else {
-                    bw.write(next + "\n");
-                }
+                os.writeObject(listIterator.next());
             }
 
+            os.close();
         } catch (IOException e) {
             e.printStackTrace();
         }

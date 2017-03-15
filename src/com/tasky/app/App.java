@@ -85,7 +85,11 @@ public class App {
         this.auth = user;
 
         // Load the tasks from file
-        this.taskHandler.loadFromFile();
+        try {
+            this.taskHandler.loadFromFile();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         // Refresh UI
         this.ui.refreshUI();

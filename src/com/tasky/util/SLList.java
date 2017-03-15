@@ -1,5 +1,6 @@
 package com.tasky.util;
 
+import java.io.Serializable;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -157,6 +158,15 @@ public class SLList<T extends Comparable<T>> implements IList<T> {
         this.nrOfElements--;
 
         return true;
+    }
+
+    /**
+     * Remove all items from list
+     */
+    public void clear() {
+        this.first = null;
+        this.last = null;
+        this.nrOfElements = 0;
     }
 
     /**
