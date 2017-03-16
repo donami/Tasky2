@@ -1,6 +1,5 @@
 package com.tasky.util;
 
-import java.io.Serializable;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -126,7 +125,7 @@ public class SLList<T extends Comparable<T>> implements IList<T> {
     /**
      * Remove a node at a specific position
      * @param pos   The position of the node to be removed
-     * @return True if the removal succeded else false
+     * @return True if the removal succeeded else false
      */
     public boolean remove(int pos) {
         if (pos > nrOfElements) {

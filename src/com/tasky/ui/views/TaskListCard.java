@@ -6,18 +6,9 @@ import com.tasky.ui.BaseFrame;
 import com.tasky.ui.ListCellRenderer;
 import net.miginfocom.swing.MigLayout;
 import org.apache.commons.lang.time.DateUtils;
-import org.jdatepicker.JDatePicker;
-import org.jdatepicker.impl.JDatePanelImpl;
-import org.jdatepicker.impl.JDatePickerImpl;
-import org.jdatepicker.impl.SqlDateModel;
-import org.jdatepicker.impl.UtilDateModel;
 
 import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -28,12 +19,11 @@ import java.util.*;
 public class TaskListCard extends JPanel implements Observer {
     final public static String TASK_LIST_CARD = "Task SLList Card";
 
-    private BaseFrame baseFrame;
+    private final BaseFrame baseFrame;
     private JButton deleteTaskButton;
     private JButton addTaskButton;
     private JButton sortButton;
-    private JButton setCompleteButton;
-    private JButton setNotCompleteButton;
+    private JButton toggleCompleteButton;
     private JButton editTaskButton;
     private JButton clearTasksButton;
     private JComboBox<String> sortOrderComboBox;
@@ -82,8 +72,7 @@ public class TaskListCard extends JPanel implements Observer {
         this.deleteTaskButton = new JButton("Remove task");
         this.deleteTaskButton.setEnabled(false);
         this.sortButton = new JButton("Sort");
-        this.setCompleteButton = new JButton("Mark as completed");
-        this.setNotCompleteButton = new JButton("Mark as not complete");
+        this.toggleCompleteButton = new JButton("Toggle complete");
         this.editTaskButton = new JButton("Edit");
         this.clearTasksButton = new JButton("Clear all");
 
@@ -99,9 +88,7 @@ public class TaskListCard extends JPanel implements Observer {
         this.panelBottomButtons.add(Box.createHorizontalGlue());
         this.panelBottomButtons.add(this.clearTasksButton);
         this.panelBottomButtons.add(Box.createHorizontalGlue());
-        this.panelBottomButtons.add(this.setCompleteButton);
-        this.panelBottomButtons.add(Box.createRigidArea(new Dimension(10, 0)));
-        this.panelBottomButtons.add(this.setNotCompleteButton);
+        this.panelBottomButtons.add(this.toggleCompleteButton);
 
         this.panelTopButtons.add(this.addTaskButton);
         this.panelTopButtons.add(Box.createHorizontalGlue());
@@ -124,138 +111,110 @@ public class TaskListCard extends JPanel implements Observer {
     }
 
     private void addEvents() {
-        this.deleteTaskButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (taskList.getSelectedIndex() > -1) {
-                    baseFrame.getApp().getTaskHandler().deleteTask(taskList.getSelectedIndex());
+        this.deleteTaskButton.addActionListener(e -> {
+            if (taskList.getSelectedIndex() > -1) {
+                baseFrame.getApp().getTaskHandler().deleteTask(taskList.getSelectedIndex());
 
-                    // If there are no remaining tasks, or no task is selected,
-                    // disable the button
-                    if (listModel.getSize() <= 0 ||
-                            taskList.getSelectedIndex() == -1)
-                    {
-                        deleteTaskButton.setEnabled(false);
-                    }
+                // If there are no remaining tasks, or no task is selected,
+                // disable the button
+                if (listModel.getSize() <= 0 ||
+                        taskList.getSelectedIndex() == -1)
+                {
+                    deleteTaskButton.setEnabled(false);
                 }
             }
         });
 
-        this.addTaskButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String taskName = (String) JOptionPane.showInputDialog("Task name");
+        this.addTaskButton.addActionListener(e -> {
+            String taskName = JOptionPane.showInputDialog("Task name");
 
-                // If a task name is provided, write to file
-                if ((taskName != null) && (taskName.length() > 0)) {
-                    baseFrame.getApp().getTaskHandler().addTask(taskName);
-                }
+            // If a task name is provided, write to file
+            if ((taskName != null) && (taskName.length() > 0)) {
+                baseFrame.getApp().getTaskHandler().addTask(taskName);
             }
         });
 
-        this.taskList.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-            @Override
-            public void valueChanged(ListSelectionEvent e) {
-                if (!e.getValueIsAdjusting()) {
-                    deleteTaskButton.setEnabled(true);
-                }
+        this.taskList.getSelectionModel().addListSelectionListener(e -> {
+            if (!e.getValueIsAdjusting()) {
+                deleteTaskButton.setEnabled(true);
             }
         });
 
-        this.sortButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                switch (sortOrderComboBox.getSelectedIndex()) {
-                    case 0:
-                        baseFrame.getApp().getTaskHandler().sortTasks(TaskHandler.SortOrder.ASC);
-                        break;
-                    case 1:
-                        baseFrame.getApp().getTaskHandler().sortTasks(TaskHandler.SortOrder.DESC);
-                        break;
-                    default:
-                        baseFrame.getApp().getTaskHandler().sortTasks();
+        this.sortButton.addActionListener(e -> {
+            switch (sortOrderComboBox.getSelectedIndex()) {
+                case 0:
+                    baseFrame.getApp().getTaskHandler().sortTasks(TaskHandler.SortOrder.ASC);
+                    break;
+                case 1:
+                    baseFrame.getApp().getTaskHandler().sortTasks(TaskHandler.SortOrder.DESC);
+                    break;
+                default:
+                    baseFrame.getApp().getTaskHandler().sortTasks();
 
-                }
             }
         });
 
-        this.setCompleteButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (taskList.getSelectedIndex() > -1) {
+        this.toggleCompleteButton.addActionListener(e -> {
+            if (taskList.getSelectedIndex() > -1) {
+                if (this.taskList.getSelectedValue().getCompleted()) {
+                    baseFrame.getApp().getTaskHandler().setComplete(taskList.getSelectedIndex() + 1, false);
+                }
+                else {
                     baseFrame.getApp().getTaskHandler().setComplete(taskList.getSelectedIndex() + 1, true);
                 }
             }
         });
 
-        this.setNotCompleteButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (taskList.getSelectedIndex() > -1) {
-                    baseFrame.getApp().getTaskHandler().setComplete(taskList.getSelectedIndex() + 1, false);
-                }
-            }
-        });
+        this.clearTasksButton.addActionListener(e -> baseFrame.getApp().getTaskHandler().clear());
 
-        this.clearTasksButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                baseFrame.getApp().getTaskHandler().clear();
-            }
-        });
+        this.editTaskButton.addActionListener(e -> {
+            if (taskList.getSelectedIndex() > -1) {
+                Task selectedTask = taskList.getSelectedValue();
 
-        this.editTaskButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (taskList.getSelectedIndex() > -1) {
-                    Task selectedTask = taskList.getSelectedValue();
+                JTextField taskNameInput = new JTextField(selectedTask.getName());
+                JCheckBox completed = new JCheckBox();
+                JComboBox<Date> dateComboBox = new JComboBox<>();
 
-                    JTextField taskNameInput = new JTextField(selectedTask.getName());
-                    JCheckBox completed = new JCheckBox();
-                    JComboBox<Date> dateComboBox = new JComboBox<>();
+                GregorianCalendar calendar = new GregorianCalendar();
+                dateComboBox.addItem(calendar.getTime());
 
-                    GregorianCalendar calendar = new GregorianCalendar();
+                // Add dates to the combo box
+                for (int i = 0; i < 30; i++) {
+                    calendar.roll(GregorianCalendar.DAY_OF_YEAR, 1);
                     dateComboBox.addItem(calendar.getTime());
 
-                    // Add dates to the combo box
-                    for (int i = 0; i < 30; i++) {
-                        calendar.roll(GregorianCalendar.DAY_OF_YEAR, 1);
-                        dateComboBox.addItem(calendar.getTime());
-
-                        // If there already is a due date, select it
-                        if (selectedTask.getDueDate() != null &&
-                            DateUtils.isSameDay(selectedTask.getDueDate(), calendar.getTime()))
-                        {
-                            dateComboBox.setSelectedItem(calendar.getTime());
-                        }
+                    // If there already is a due date, select it
+                    if (selectedTask.getDueDate() != null &&
+                        DateUtils.isSameDay(selectedTask.getDueDate(), calendar.getTime()))
+                    {
+                        dateComboBox.setSelectedItem(calendar.getTime());
                     }
-                    dateComboBox.setRenderer(new DateComboBoxRenderer());
+                }
+                dateComboBox.setRenderer(new DateComboBoxRenderer());
 
-                    if (selectedTask.getCompleted()) {
-                        completed.setSelected(true);
-                    }
+                if (selectedTask.getCompleted()) {
+                    completed.setSelected(true);
+                }
 
-                    JPanel dialogPanel = new JPanel();
-                    dialogPanel.setLayout(new MigLayout());
+                JPanel dialogPanel = new JPanel();
+                dialogPanel.setLayout(new MigLayout());
 
-                    dialogPanel.add(new JLabel("Task name"));
-                    dialogPanel.add(taskNameInput, "w 100%, wrap");
-                    dialogPanel.add(new JLabel("Due date"));
-                    dialogPanel.add(dateComboBox, "wrap");
-                    dialogPanel.add(new JLabel("Completed"));
-                    dialogPanel.add(completed, "wrap");
+                dialogPanel.add(new JLabel("Task name"));
+                dialogPanel.add(taskNameInput, "w 100%, wrap");
+                dialogPanel.add(new JLabel("Due date"));
+                dialogPanel.add(dateComboBox, "wrap");
+                dialogPanel.add(new JLabel("Completed"));
+                dialogPanel.add(completed, "wrap");
 
-                    int result = JOptionPane.showConfirmDialog(baseFrame, dialogPanel, "Edit task", JOptionPane.OK_CANCEL_OPTION);
+                int result = JOptionPane.showConfirmDialog(baseFrame, dialogPanel, "Edit task", JOptionPane.OK_CANCEL_OPTION);
 
-                    if (result == JOptionPane.OK_OPTION) {
-                        System.out.println(dateComboBox.getSelectedItem());
-                        selectedTask.setName(taskNameInput.getText());
-                        selectedTask.setDueDate((Date) dateComboBox.getSelectedItem());
-                        selectedTask.setCompleted(completed.isSelected());
+                if (result == JOptionPane.OK_OPTION) {
+                    selectedTask.setName(taskNameInput.getText());
+                    selectedTask.setDueDate((Date) dateComboBox.getSelectedItem());
+                    selectedTask.setCompleted(completed.isSelected());
 
-                        if (selectedTask.getName() != null) {
-                            baseFrame.getApp().getTaskHandler().editTask(taskList.getSelectedIndex() + 1, selectedTask);
-                        }
+                    if (selectedTask.getName() != null) {
+                        baseFrame.getApp().getTaskHandler().editTask(taskList.getSelectedIndex() + 1, selectedTask);
                     }
                 }
             }
@@ -266,7 +225,7 @@ public class TaskListCard extends JPanel implements Observer {
     public static class DateComboBoxRenderer extends DefaultListCellRenderer {
 
         // desired format for the date
-        private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
         public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
             Object item = value;

@@ -1,8 +1,6 @@
 package com.tasky.util;
 
 
-import java.io.Serializable;
-
 /**
  * Created by markus on 2017-03-08.
  */
@@ -19,12 +17,12 @@ public class SortableList<T extends Comparable<T>> extends SLList<T> {
         while(i != null){
             Node j = this.getFirst();
 
-            if(j.getData().compareTo(i.getData()) > 0){
+            if (j.getData().compareTo(i.getData()) > 0){
                 prevI.setNext(i.getNext());
                 i.setNext(j);
                 this.setFirst(i);
             }
-            else{
+            else {
                 Node prevJ = null;
                 while (j.getNext() != null){
                     prevJ = j;
@@ -50,15 +48,15 @@ public class SortableList<T extends Comparable<T>> extends SLList<T> {
         Node i = this.getFirst().getNext();
         Node prevI = this.getFirst();
 
-        while(i != null){
+        while (i != null){
             Node j = this.getFirst();
 
-            if(j.getData().compareTo(i.getData()) < 0){
+            if (j.getData().compareTo(i.getData()) < 0){
                 prevI.setNext(i.getNext());
                 i.setNext(j);
                 this.setFirst(i);
             }
-            else{
+            else {
                 Node prevJ = null;
                 while (j.getNext() != null){
                     prevJ = j;

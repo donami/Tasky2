@@ -12,8 +12,8 @@ import javax.swing.*;
 public class BaseFrame extends JFrame {
     private CardHandler cardHandler;
     private HomeCard homeCard;
-    private App app;
-    private AppMenu menuBar;
+    private final App app;
+    private final AppMenu menuBar;
 
     public BaseFrame(App app) {
         this.app = app;
