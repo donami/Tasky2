@@ -8,6 +8,8 @@ import net.miginfocom.swing.MigLayout;
 import org.apache.commons.lang.time.DateUtils;
 
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -27,6 +29,7 @@ public class TaskListCard extends JPanel implements Observer {
     private JButton editTaskButton;
     private JButton clearTasksButton;
     private JComboBox<String> sortOrderComboBox;
+    private JTextField filterTextField;
     private DefaultListModel<Task> listModel;
     private JScrollPane jScrollPane1;
     private JList<Task> taskList;
@@ -65,20 +68,22 @@ public class TaskListCard extends JPanel implements Observer {
 
 
         this.panelTopButtons = new JPanel();
-        this.panelTopButtons.setLayout(new BoxLayout(this.panelTopButtons, BoxLayout.LINE_AXIS));
-        this.panelTopButtons.setBorder(BorderFactory.createEmptyBorder(5, 0, 5, 0));
+        this.panelTopButtons.setLayout(new MigLayout("fill"));
 
         this.addTaskButton = new JButton("Add task");
         this.deleteTaskButton = new JButton("Remove task");
         this.deleteTaskButton.setEnabled(false);
-        this.sortButton = new JButton("Sort");
-        this.toggleCompleteButton = new JButton("Toggle complete");
         this.editTaskButton = new JButton("Edit");
+        this.editTaskButton.setEnabled(false);
+        this.toggleCompleteButton = new JButton("Toggle complete");
+        this.toggleCompleteButton.setEnabled(false);
+        this.sortButton = new JButton("Sort");
         this.clearTasksButton = new JButton("Clear all");
+        this.filterTextField = new JTextField(20);
 
         String[] availableSortOrders = { "Ascending", "Descending" };
         this.sortOrderComboBox = new JComboBox<>(availableSortOrders);
-        this.sortOrderComboBox.setMaximumSize(new Dimension(80, 50));
+        this.sortOrderComboBox.setMaximumSize(new Dimension(120, 50));
     }
 
     private void createGUI() {
@@ -90,10 +95,10 @@ public class TaskListCard extends JPanel implements Observer {
         this.panelBottomButtons.add(Box.createHorizontalGlue());
         this.panelBottomButtons.add(this.toggleCompleteButton);
 
-        this.panelTopButtons.add(this.addTaskButton);
-        this.panelTopButtons.add(Box.createHorizontalGlue());
-        this.panelTopButtons.add(this.sortOrderComboBox);
-        this.panelTopButtons.add(Box.createRigidArea(new Dimension(10, 0)));
+        this.panelTopButtons.add(this.addTaskButton, "align left");
+        this.panelTopButtons.add(new JLabel("Filter by name"), "align center, split 2");
+        this.panelTopButtons.add(this.filterTextField);
+        this.panelTopButtons.add(this.sortOrderComboBox, "align right, split 2");
         this.panelTopButtons.add(this.sortButton);
 
         this.add(this.panelTopButtons, "w 100%, span, wrap");
@@ -110,18 +115,50 @@ public class TaskListCard extends JPanel implements Observer {
         }
     }
 
+    /**
+     * Filter the list model by string
+     * @param filter    The string to filter by
+     */
+    private void filterModel(String filter) {
+        Iterator<Task> listIterator = this.baseFrame.getApp().getTaskHandler().getTasks().iterator();
+        while (listIterator.hasNext()) {
+            Task curr = listIterator.next();
+
+            if (!curr.getName().startsWith(filter)) {
+                if (listModel.contains(curr)) {
+                    listModel.removeElement(curr);
+                }
+            }
+            else {
+                if (!listModel.contains(curr)) {
+                    listModel.addElement(curr);
+                }
+            }
+        }
+    }
+
     private void addEvents() {
+        this.filterTextField.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                filterModel(filterTextField.getText());
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                filterModel(filterTextField.getText());
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                filterModel(filterTextField.getText());
+            }
+        });
+
         this.deleteTaskButton.addActionListener(e -> {
             if (taskList.getSelectedIndex() > -1) {
+                // Delete task
                 baseFrame.getApp().getTaskHandler().deleteTask(taskList.getSelectedIndex());
-
-                // If there are no remaining tasks, or no task is selected,
-                // disable the button
-                if (listModel.getSize() <= 0 ||
-                        taskList.getSelectedIndex() == -1)
-                {
-                    deleteTaskButton.setEnabled(false);
-                }
             }
         });
 
@@ -136,7 +173,19 @@ public class TaskListCard extends JPanel implements Observer {
 
         this.taskList.getSelectionModel().addListSelectionListener(e -> {
             if (!e.getValueIsAdjusting()) {
-                deleteTaskButton.setEnabled(true);
+                if (taskList.getSelectedIndex() > -1) {
+                    this.deleteTaskButton.setEnabled(true);
+                    this.editTaskButton.setEnabled(true);
+                    this.toggleCompleteButton.setEnabled(true);
+                }
+                else {
+                    this.deleteTaskButton.setEnabled(false);
+                    this.editTaskButton.setEnabled(false);
+                    this.toggleCompleteButton.setEnabled(false);
+                }
+
+                // The clear button should only be enabled if there are any tasks
+                this.clearTasksButton.setEnabled(!this.listModel.isEmpty());
             }
         });
 
@@ -156,12 +205,8 @@ public class TaskListCard extends JPanel implements Observer {
 
         this.toggleCompleteButton.addActionListener(e -> {
             if (taskList.getSelectedIndex() > -1) {
-                if (this.taskList.getSelectedValue().getCompleted()) {
-                    baseFrame.getApp().getTaskHandler().setComplete(taskList.getSelectedIndex() + 1, false);
-                }
-                else {
-                    baseFrame.getApp().getTaskHandler().setComplete(taskList.getSelectedIndex() + 1, true);
-                }
+                baseFrame.getApp().getTaskHandler().setComplete(taskList.getSelectedIndex() + 1,
+                        !this.taskList.getSelectedValue().getCompleted());
             }
         });
 
