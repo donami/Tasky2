@@ -1,5 +1,6 @@
 package com.tasky.util;
 
+import java.util.Comparator;
 
 /**
  * Created by markus on 2017-03-08.
@@ -7,17 +8,14 @@ package com.tasky.util;
 public class SortableList<T extends Comparable<T>> extends SLList<T> {
     public SortableList() {}
 
-    /**
-     * Sort the list in ascending order
-     */
-    public void sort() {
+    public void sort(Comparator<? super T> c) {
         Node i = this.getFirst().getNext();
         Node prevI = this.getFirst();
 
         while(i != null){
             Node j = this.getFirst();
 
-            if (j.getData().compareTo(i.getData()) > 0){
+            if (c.compare(j.getData(), i.getData()) > 0){
                 prevI.setNext(i.getNext());
                 i.setNext(j);
                 this.setFirst(i);
@@ -27,7 +25,7 @@ public class SortableList<T extends Comparable<T>> extends SLList<T> {
                 while (j.getNext() != null){
                     prevJ = j;
                     j = j.getNext();
-                    if (j.getData().compareTo(i.getData()) > 0){
+                    if (c.compare(j.getData(), i.getData()) > 0){
                         prevI.setNext(i.getNext());
                         i.setNext(j);
                         prevJ.setNext(i);
@@ -40,41 +38,5 @@ public class SortableList<T extends Comparable<T>> extends SLList<T> {
         }
         this.setLast(prevI);
     }
-
-    /**
-     * Sort the list in descending order
-     */
-    public void sortDesc() {
-        Node i = this.getFirst().getNext();
-        Node prevI = this.getFirst();
-
-        while (i != null){
-            Node j = this.getFirst();
-
-            if (j.getData().compareTo(i.getData()) < 0){
-                prevI.setNext(i.getNext());
-                i.setNext(j);
-                this.setFirst(i);
-            }
-            else {
-                Node prevJ = null;
-                while (j.getNext() != null){
-                    prevJ = j;
-                    j = j.getNext();
-                    if (j.getData().compareTo(i.getData()) < 0){
-                        prevI.setNext(i.getNext());
-                        i.setNext(j);
-                        prevJ.setNext(i);
-                        break;
-                    }
-                }
-            }
-            prevI = i;
-            i = i.getNext();
-        }
-        this.setLast(prevI);
-    }
-
-
 
 }

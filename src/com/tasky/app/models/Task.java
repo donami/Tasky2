@@ -1,12 +1,14 @@
 package com.tasky.app.models;
 
+import com.tasky.util.TaskComparator;
+
 import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Created by markus on 2017-02-28.
  */
-public class Task implements Comparable<Task>, Serializable {
+public class Task extends TaskComparator implements Comparable<Task>, Serializable {
     private String name;
     private Boolean completed;
     private Date dueDate;

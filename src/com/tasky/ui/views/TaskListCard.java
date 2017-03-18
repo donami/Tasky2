@@ -81,7 +81,15 @@ public class TaskListCard extends JPanel implements Observer {
         this.clearTasksButton = new JButton("Clear all");
         this.filterTextField = new JTextField(20);
 
-        String[] availableSortOrders = { "Ascending", "Descending" };
+        String[] availableSortOrders = {
+            "Ascending",
+            "Descending",
+            "Due date Asc",
+            "Due date Desc",
+            "Completed Asc",
+            "Completed Desc"
+        };
+
         this.sortOrderComboBox = new JComboBox<>(availableSortOrders);
         this.sortOrderComboBox.setMaximumSize(new Dimension(120, 50));
     }
@@ -190,17 +198,19 @@ public class TaskListCard extends JPanel implements Observer {
         });
 
         this.sortButton.addActionListener(e -> {
-            switch (sortOrderComboBox.getSelectedIndex()) {
-                case 0:
-                    baseFrame.getApp().getTaskHandler().sortTasks(TaskHandler.SortOrder.ASC);
-                    break;
-                case 1:
-                    baseFrame.getApp().getTaskHandler().sortTasks(TaskHandler.SortOrder.DESC);
-                    break;
-                default:
-                    baseFrame.getApp().getTaskHandler().sortTasks();
+            TaskHandler.SortOrder selectedSortOrder;
 
+            switch (sortOrderComboBox.getSelectedIndex()) {
+                case 0: selectedSortOrder = TaskHandler.SortOrder.NAME_ASC; break;
+                case 1: selectedSortOrder = TaskHandler.SortOrder.NAME_DESC; break;
+                case 2: selectedSortOrder = TaskHandler.SortOrder.DUE_DATE_ASC; break;
+                case 3: selectedSortOrder = TaskHandler.SortOrder.DUE_DATE_DESC; break;
+                case 4: selectedSortOrder = TaskHandler.SortOrder.COMPLETED_ASC; break;
+                case 5: selectedSortOrder = TaskHandler.SortOrder.COMPLETED_DESC; break;
+                default: selectedSortOrder = baseFrame.getApp().getTaskHandler().getDefaultSortingOrder();
             }
+
+            baseFrame.getApp().getTaskHandler().sortTasks(selectedSortOrder);
         });
 
         this.toggleCompleteButton.addActionListener(e -> {

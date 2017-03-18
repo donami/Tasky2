@@ -3,6 +3,7 @@ package com.tasky.app;
 import com.tasky.app.models.Task;
 import com.tasky.util.Encrypt;
 import com.tasky.util.SortableList;
+import com.tasky.util.TaskComparator;
 
 import java.io.*;
 import java.util.Iterator;
@@ -15,9 +16,9 @@ public class TaskHandler extends Observable {
 
     private App app;
     private SortableList<Task> tasks;
-    private SortOrder defaultSortingOrder = SortOrder.ASC;
+    private SortOrder defaultSortingOrder = SortOrder.NAME_ASC;
 
-    public enum SortOrder { ASC, DESC }
+    public enum SortOrder { NAME_ASC, NAME_DESC, DUE_DATE_ASC, DUE_DATE_DESC, COMPLETED_ASC, COMPLETED_DESC }
 
     public TaskHandler(App app) {
         this.app = app;
@@ -166,15 +167,34 @@ public class TaskHandler extends Observable {
      * @param sortingOrder  The order to sort by
      */
     public void sortTasks(SortOrder sortingOrder) {
-        if (sortingOrder == SortOrder.ASC) {
-            this.tasks.sort();
-        }
-        else {
-            this.tasks.sortDesc();
+
+        switch (sortingOrder) {
+            case DUE_DATE_ASC:
+                this.tasks.sort(TaskComparator.byDueDate(true));
+                break;
+            case DUE_DATE_DESC:
+                this.tasks.sort(TaskComparator.byDueDate(false));
+                break;
+            case NAME_ASC:
+                this.tasks.sort(TaskComparator.byName(true));
+                break;
+            case COMPLETED_ASC:
+                this.tasks.sort(TaskComparator.byCompleted(true));
+                break;
+            case COMPLETED_DESC:
+                this.tasks.sort(TaskComparator.byCompleted(false));
+                break;
+            case NAME_DESC:
+            default:
+                this.tasks.sort(TaskComparator.byName(false));
         }
 
         setChanged();
         notifyObservers();
+    }
+
+    public SortOrder getDefaultSortingOrder() {
+        return this.defaultSortingOrder;
     }
 
     /**

@@ -1,17 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="2fe5f66b-32ca-4647-99c2-198ea319ec55" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Tasky2/com/tasky/ui/BaseFrame.class" afterPath="$PROJECT_DIR$/out/production/Tasky2/com/tasky/ui/BaseFrame.class" />
+    <list default="true" id="2fe5f66b-32ca-4647-99c2-198ea319ec55" name="Default" comment="Added filtering by task name">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/tasky/util/TaskComparator.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Tasky2/com/tasky/app/TaskHandler$SortOrder.class" afterPath="$PROJECT_DIR$/out/production/Tasky2/com/tasky/app/TaskHandler$SortOrder.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Tasky2/com/tasky/app/TaskHandler.class" afterPath="$PROJECT_DIR$/out/production/Tasky2/com/tasky/app/TaskHandler.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Tasky2/com/tasky/app/models/Task.class" afterPath="$PROJECT_DIR$/out/production/Tasky2/com/tasky/app/models/Task.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Tasky2/com/tasky/ui/views/TaskListCard$DateComboBoxRenderer.class" afterPath="$PROJECT_DIR$/out/production/Tasky2/com/tasky/ui/views/TaskListCard$DateComboBoxRenderer.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Tasky2/com/tasky/ui/views/TaskListCard.class" afterPath="$PROJECT_DIR$/out/production/Tasky2/com/tasky/ui/views/TaskListCard.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Tasky2/com/tasky/util/SLList$1.class" afterPath="$PROJECT_DIR$/out/production/Tasky2/com/tasky/util/SLList$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Tasky2/com/tasky/util/SLList$Node.class" afterPath="$PROJECT_DIR$/out/production/Tasky2/com/tasky/util/SLList$Node.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Tasky2/com/tasky/util/SLList.class" afterPath="$PROJECT_DIR$/out/production/Tasky2/com/tasky/util/SLList.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Tasky2/com/tasky/util/SortableList.class" afterPath="$PROJECT_DIR$/out/production/Tasky2/com/tasky/util/SortableList.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ee11cbb19052e40b07aac0ca060c23ee.ser" afterPath="$PROJECT_DIR$/ee11cbb19052e40b07aac0ca060c23ee.ser" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/tasky/app/TaskHandler.java" afterPath="$PROJECT_DIR$/src/com/tasky/app/TaskHandler.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/tasky/app/models/Task.java" afterPath="$PROJECT_DIR$/src/com/tasky/app/models/Task.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/tasky/ui/views/TaskListCard.java" afterPath="$PROJECT_DIR$/src/com/tasky/ui/views/TaskListCard.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/tasky/util/SortableList.java" afterPath="$PROJECT_DIR$/src/com/tasky/util/SortableList.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -27,13 +30,15 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="TaskListCard.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="TaskListCard.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/tasky/ui/views/TaskListCard.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-3052">
-              <caret line="71" column="0" lean-forward="true" selection-start-line="71" selection-start-column="0" selection-end-line="71" selection-end-column="0" />
+            <state relative-caret-position="158">
+              <caret line="203" column="51" lean-forward="false" selection-start-line="203" selection-start-column="51" selection-end-line="203" selection-end-column="51" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="method#refreshListModel#0;class#TaskListCard#0" expanded="false" />
+                <element signature="method#filterModel#0;class#TaskListCard#0" expanded="false" />
                 <element signature="class#DateComboBoxRenderer#0;class#TaskListCard#0" expanded="false" />
               </folding>
             </state>
@@ -68,24 +73,36 @@
       <file leaf-file-name="SortableList.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/tasky/util/SortableList.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="630">
-              <caret line="35" column="17" lean-forward="false" selection-start-line="35" selection-start-column="17" selection-end-line="35" selection-end-column="17" />
+            <state relative-caret-position="522">
+              <caret line="29" column="37" lean-forward="true" selection-start-line="29" selection-start-column="37" selection-end-line="29" selection-end-column="37" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TaskHandler.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="TaskComparator.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/tasky/util/TaskComparator.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="404">
+              <caret line="30" column="28" lean-forward="false" selection-start-line="30" selection-start-column="28" selection-end-line="30" selection-end-column="28" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TaskHandler.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/tasky/app/TaskHandler.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1224">
-              <caret line="79" column="0" lean-forward="false" selection-start-line="79" selection-start-column="0" selection-end-line="79" selection-end-column="0" />
+            <state relative-caret-position="378">
+              <caret line="180" column="27" lean-forward="false" selection-start-line="180" selection-start-column="27" selection-end-line="180" selection-end-column="27" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="method#addTask#0;class#TaskHandler#0" expanded="false" />
+                <element signature="method#clear#0;class#TaskHandler#0" expanded="false" />
                 <element signature="method#deleteTask#0;class#TaskHandler#0" expanded="false" />
                 <element signature="method#editTask#0;class#TaskHandler#0" expanded="false" />
-                <element signature="method#sortTasks#1;class#TaskHandler#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -104,16 +121,10 @@
       <file leaf-file-name="Task.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/tasky/app/models/Task.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="540">
-              <caret line="39" column="0" lean-forward="false" selection-start-line="39" selection-start-column="0" selection-end-line="39" selection-end-column="0" />
+            <state relative-caret-position="360">
+              <caret line="20" column="0" lean-forward="true" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#545#546#0" expanded="true" />
-                <element signature="e#572#573#0" expanded="true" />
-                <element signature="e#850#851#0" expanded="true" />
-                <element signature="e#888#889#0" expanded="true" />
-                <element signature="e#920#921#0" expanded="true" />
-                <element signature="e#955#956#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -145,13 +156,15 @@
       <find>descen</find>
       <find>tasks.ser</find>
       <find>add</find>
+      <find>sort</find>
+      <find>Ascend</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="master" />
+        <entry key="$PROJECT_DIR$" value="c7fc4820532d7100bf12ee9421865c419b053bbd" />
       </map>
     </option>
   </component>
@@ -186,10 +199,11 @@
         <option value="$PROJECT_DIR$/tasks.ser" />
         <option value="$PROJECT_DIR$/src/com/tasky/app/App.java" />
         <option value="$PROJECT_DIR$/ee11cbb19052e40b07aac0ca060c23ee.ser" />
-        <option value="$PROJECT_DIR$/src/com/tasky/app/models/Task.java" />
-        <option value="$PROJECT_DIR$/src/com/tasky/app/TaskHandler.java" />
         <option value="$PROJECT_DIR$/src/com/tasky/util/SLList.java" />
+        <option value="$PROJECT_DIR$/src/com/tasky/app/models/Task.java" />
         <option value="$PROJECT_DIR$/src/com/tasky/util/SortableList.java" />
+        <option value="$PROJECT_DIR$/src/com/tasky/util/TaskComparator.java" />
+        <option value="$PROJECT_DIR$/src/com/tasky/app/TaskHandler.java" />
         <option value="$PROJECT_DIR$/src/com/tasky/ui/views/TaskListCard.java" />
       </list>
     </option>
@@ -215,8 +229,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
       <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
@@ -378,6 +390,8 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -735,7 +749,14 @@
       <option name="project" value="LOCAL" />
       <updated>1489684523823</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Added filtering by task name">
+      <created>1489741838368</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1489741838368</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -749,9 +770,9 @@
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="1.0" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3290461" sideWeight="0.50208336" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3290461" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3290461" sideWeight="0.49791667" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3290461" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Properties" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -780,11 +801,12 @@
     <MESSAGE value="Added sorting functionality" />
     <MESSAGE value="Fixed task list layout with buttons below instead" />
     <MESSAGE value="Now using one toggle complete button instead of two different" />
-    <option name="LAST_COMMIT_MESSAGE" value="Now using one toggle complete button instead of two different" />
+    <MESSAGE value="Added filtering by task name" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added filtering by task name" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="4" />
+      <option name="time" value="5" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -793,20 +815,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/com/tasky/app/TaskHandler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#addTask#0;class#TaskHandler#0" expanded="false" />
-            <element signature="method#deleteTask#0;class#TaskHandler#0" expanded="false" />
-            <element signature="method#editTask#0;class#TaskHandler#0" expanded="false" />
-            <element signature="method#sortTasks#1;class#TaskHandler#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/tasky/ui/CardHandler.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="468">
@@ -843,9 +851,9 @@
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#addTask#0;class#TaskHandler#0" expanded="false" />
+            <element signature="method#clear#0;class#TaskHandler#0" expanded="false" />
             <element signature="method#deleteTask#0;class#TaskHandler#0" expanded="false" />
             <element signature="method#editTask#0;class#TaskHandler#0" expanded="false" />
-            <element signature="method#sortTasks#1;class#TaskHandler#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -864,6 +872,8 @@
           <caret line="113" column="52" lean-forward="false" selection-start-line="113" selection-start-column="52" selection-end-line="113" selection-end-column="52" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="method#refreshListModel#0;class#TaskListCard#0" expanded="false" />
+            <element signature="method#filterModel#0;class#TaskListCard#0" expanded="false" />
             <element signature="class#DateComboBoxRenderer#0;class#TaskListCard#0" expanded="false" />
           </folding>
         </state>
@@ -875,12 +885,6 @@
           <caret line="11" column="31" lean-forward="false" selection-start-line="11" selection-start-column="31" selection-end-line="11" selection-end-column="31" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#545#546#0" expanded="true" />
-            <element signature="e#572#573#0" expanded="true" />
-            <element signature="e#850#851#0" expanded="true" />
-            <element signature="e#888#889#0" expanded="true" />
-            <element signature="e#920#921#0" expanded="true" />
-            <element signature="e#955#956#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -916,6 +920,8 @@
           <caret line="41" column="0" lean-forward="true" selection-start-line="41" selection-start-column="0" selection-end-line="41" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="method#refreshListModel#0;class#TaskListCard#0" expanded="false" />
+            <element signature="method#filterModel#0;class#TaskListCard#0" expanded="false" />
             <element signature="class#DateComboBoxRenderer#0;class#TaskListCard#0" expanded="false" />
           </folding>
         </state>
@@ -946,9 +952,9 @@
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#addTask#0;class#TaskHandler#0" expanded="false" />
+            <element signature="method#clear#0;class#TaskHandler#0" expanded="false" />
             <element signature="method#deleteTask#0;class#TaskHandler#0" expanded="false" />
             <element signature="method#editTask#0;class#TaskHandler#0" expanded="false" />
-            <element signature="method#sortTasks#1;class#TaskHandler#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -960,12 +966,6 @@
           <caret line="40" column="30" lean-forward="false" selection-start-line="40" selection-start-column="30" selection-end-line="40" selection-end-column="30" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#545#546#0" expanded="true" />
-            <element signature="e#572#573#0" expanded="true" />
-            <element signature="e#850#851#0" expanded="true" />
-            <element signature="e#888#889#0" expanded="true" />
-            <element signature="e#920#921#0" expanded="true" />
-            <element signature="e#955#956#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1117,33 +1117,11 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/_ee11cbb19052e40b07aac0ca060c23ee.ser" />
-    <entry file="file://$PROJECT_DIR$/src/com/tasky/app/models/Task.java">
+    <entry file="file://$PROJECT_DIR$/src/com/tasky/ui/BaseFrame.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="540">
-          <caret line="39" column="0" lean-forward="false" selection-start-line="39" selection-start-column="0" selection-end-line="39" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#545#546#0" expanded="true" />
-            <element signature="e#572#573#0" expanded="true" />
-            <element signature="e#850#851#0" expanded="true" />
-            <element signature="e#888#889#0" expanded="true" />
-            <element signature="e#920#921#0" expanded="true" />
-            <element signature="e#955#956#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/tasky/app/TaskHandler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1224">
-          <caret line="79" column="0" lean-forward="false" selection-start-line="79" selection-start-column="0" selection-end-line="79" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#addTask#0;class#TaskHandler#0" expanded="false" />
-            <element signature="method#deleteTask#0;class#TaskHandler#0" expanded="false" />
-            <element signature="method#editTask#0;class#TaskHandler#0" expanded="false" />
-            <element signature="method#sortTasks#1;class#TaskHandler#0" expanded="false" />
-          </folding>
+        <state relative-caret-position="504">
+          <caret line="32" column="0" lean-forward="false" selection-start-line="32" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1160,29 +1138,57 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/tasky/ui/BaseFrame.java">
+    <entry file="file://$PROJECT_DIR$/src/com/tasky/util/SortableList.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="504">
-          <caret line="32" column="0" lean-forward="false" selection-start-line="32" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
+        <state relative-caret-position="522">
+          <caret line="29" column="37" lean-forward="true" selection-start-line="29" selection-start-column="37" selection-end-line="29" selection-end-column="37" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/tasky/util/SortableList.java">
+    <entry file="file://$PROJECT_DIR$/src/com/tasky/util/TaskComparator.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="630">
-          <caret line="35" column="17" lean-forward="false" selection-start-line="35" selection-start-column="17" selection-end-line="35" selection-end-column="17" />
-          <folding />
+        <state relative-caret-position="404">
+          <caret line="30" column="28" lean-forward="false" selection-start-line="30" selection-start-column="28" selection-end-line="30" selection-end-column="28" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/tasky/ui/views/TaskListCard.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-3052">
-          <caret line="71" column="0" lean-forward="true" selection-start-line="71" selection-start-column="0" selection-end-line="71" selection-end-column="0" />
+        <state relative-caret-position="158">
+          <caret line="203" column="51" lean-forward="false" selection-start-line="203" selection-start-column="51" selection-end-line="203" selection-end-column="51" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="method#refreshListModel#0;class#TaskListCard#0" expanded="false" />
+            <element signature="method#filterModel#0;class#TaskListCard#0" expanded="false" />
             <element signature="class#DateComboBoxRenderer#0;class#TaskListCard#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/tasky/app/models/Task.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="20" column="0" lean-forward="true" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/tasky/app/TaskHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="378">
+          <caret line="180" column="27" lean-forward="false" selection-start-line="180" selection-start-column="27" selection-end-line="180" selection-end-column="27" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#addTask#0;class#TaskHandler#0" expanded="false" />
+            <element signature="method#clear#0;class#TaskHandler#0" expanded="false" />
+            <element signature="method#deleteTask#0;class#TaskHandler#0" expanded="false" />
+            <element signature="method#editTask#0;class#TaskHandler#0" expanded="false" />
           </folding>
         </state>
       </provider>
