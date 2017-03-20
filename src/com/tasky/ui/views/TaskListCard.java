@@ -10,6 +10,7 @@ import org.apache.commons.lang.time.DateUtils;
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.swing.event.ListSelectionEvent;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -154,7 +155,180 @@ public class TaskListCard extends JPanel implements Observer {
         }
     }
 
+    /**
+     * Display task information When user
+     * double clicks a task in the list
+     */
+    private void handleTaskDoubleClick() {
+        if (this.taskList.getSelectedIndex() < 0) {
+            return;
+        }
+
+        Task task = taskList.getSelectedValue();
+
+        JPanel infoPanel = new JPanel();
+        infoPanel.setLayout(new MigLayout());
+
+        infoPanel.add(new JLabel("Task name:"));
+        infoPanel.add(new JLabel(task.getName()), "wrap");
+
+        infoPanel.add(new JLabel("Due date:"));
+        infoPanel.add(new JLabel((task.getDueDate() == null) ? "Not specified" : task.getDueDate().toString()), "wrap");
+
+        infoPanel.add(new JLabel(task.getCompleted() ? "Completed" : "Not completed"), "wrap");
+
+        JOptionPane.showMessageDialog(baseFrame, infoPanel, "View task", JOptionPane.PLAIN_MESSAGE);
+    }
+
+    /**
+     * Event handler for clicking sort button
+     */
+    private void handleSortClick() {
+        TaskHandler.SortOrder selectedSortOrder;
+
+        switch (sortOrderComboBox.getSelectedIndex()) {
+            case 0: selectedSortOrder = TaskHandler.SortOrder.NAME_ASC; break;
+            case 1: selectedSortOrder = TaskHandler.SortOrder.NAME_DESC; break;
+            case 2: selectedSortOrder = TaskHandler.SortOrder.DUE_DATE_ASC; break;
+            case 3: selectedSortOrder = TaskHandler.SortOrder.DUE_DATE_DESC; break;
+            case 4: selectedSortOrder = TaskHandler.SortOrder.COMPLETED_ASC; break;
+            case 5: selectedSortOrder = TaskHandler.SortOrder.COMPLETED_DESC; break;
+            default: selectedSortOrder = baseFrame.getApp().getTaskHandler().getDefaultSortingOrder();
+        }
+
+        baseFrame.getApp().getTaskHandler().sortTasks(selectedSortOrder);
+    }
+
+    /**
+     * Event handler for clicking add button
+     */
+    private void handleAddClick() {
+        String taskName = JOptionPane.showInputDialog("Task name");
+
+        // If a task name is provided, write to file
+        if ((taskName != null) && (taskName.length() > 0)) {
+            baseFrame.getApp().getTaskHandler().addTask(taskName);
+        }
+    }
+
+    /**
+     * Event handler for clicking toggle complete button
+     */
+    private void handleToggleCompleteClick() {
+        if (this.taskList.getSelectedIndex() > -1) {
+            this.baseFrame.getApp().getTaskHandler().setComplete(this.taskList.getSelectedIndex() + 1,
+                    !this.taskList.getSelectedValue().getCompleted());
+        }
+    }
+
+    /**
+     * Event handler for clicking edit button
+     */
+    private void handleEditClick() {
+        if (this.taskList.getSelectedIndex() > -1) {
+            Task selectedTask = this.taskList.getSelectedValue();
+
+            JTextField taskNameInput = new JTextField(selectedTask.getName());
+            JCheckBox completed = new JCheckBox();
+            JComboBox<Date> dateComboBox = new JComboBox<>();
+
+            GregorianCalendar calendar = new GregorianCalendar();
+            dateComboBox.addItem(calendar.getTime());
+
+            // Add dates to the combo box
+            for (int i = 0; i < 30; i++) {
+                calendar.roll(GregorianCalendar.DAY_OF_YEAR, 1);
+                dateComboBox.addItem(calendar.getTime());
+
+                // If there already is a due date, select it
+                if (selectedTask.getDueDate() != null &&
+                        DateUtils.isSameDay(selectedTask.getDueDate(), calendar.getTime()))
+                {
+                    dateComboBox.setSelectedItem(calendar.getTime());
+                }
+            }
+            dateComboBox.setRenderer(new DateComboBoxRenderer());
+
+            if (selectedTask.getCompleted()) {
+                completed.setSelected(true);
+            }
+
+            JPanel dialogPanel = new JPanel();
+            dialogPanel.setLayout(new MigLayout());
+
+            dialogPanel.add(new JLabel("Task name"));
+            dialogPanel.add(taskNameInput, "w 100%, wrap");
+            dialogPanel.add(new JLabel("Due date"));
+            dialogPanel.add(dateComboBox, "wrap");
+            dialogPanel.add(new JLabel("Completed"));
+            dialogPanel.add(completed, "wrap");
+
+            int result = JOptionPane.showConfirmDialog(this.baseFrame, dialogPanel, "Edit task", JOptionPane.OK_CANCEL_OPTION);
+
+            if (result == JOptionPane.OK_OPTION) {
+                selectedTask.setName(taskNameInput.getText());
+                selectedTask.setDueDate((Date) dateComboBox.getSelectedItem());
+                selectedTask.setCompleted(completed.isSelected());
+
+                if (selectedTask.getName() != null) {
+                    this.baseFrame.getApp().getTaskHandler().editTask(this.taskList.getSelectedIndex() + 1, selectedTask);
+                }
+            }
+        }
+    }
+
+    /**
+     * Event handler for clicking delete button
+     */
+    private void handleDeleteClick() {
+        // Delete task if it's selected
+        if (taskList.getSelectedIndex() > -1) {
+            baseFrame.getApp().getTaskHandler().deleteTask(taskList.getSelectedIndex());
+        }
+    }
+
+    /**
+     * Event handler for selecting a task
+     */
+    private void taskListOnChange(ListSelectionEvent e) {
+        if (!e.getValueIsAdjusting()) {
+            if (this.taskList.getSelectedIndex() > -1) {
+                this.deleteTaskButton.setEnabled(true);
+                this.editTaskButton.setEnabled(true);
+                this.toggleCompleteButton.setEnabled(true);
+            } else {
+                this.deleteTaskButton.setEnabled(false);
+                this.editTaskButton.setEnabled(false);
+                this.toggleCompleteButton.setEnabled(false);
+            }
+
+            // The clear button should only be enabled if there are any tasks
+            this.clearTasksButton.setEnabled(!this.listModel.isEmpty());
+        }
+    }
+
+    /**
+     * Event handler for clicking clear
+     */
+    private void handleClearClick() {
+        this.baseFrame.getApp().getTaskHandler().clear();
+    }
+
     private void addEvents() {
+        this.sortButton.addActionListener(e -> this.handleSortClick());
+
+        this.toggleCompleteButton.addActionListener(e -> this.handleToggleCompleteClick());
+
+        this.clearTasksButton.addActionListener(e -> this.handleClearClick());
+
+        this.editTaskButton.addActionListener(e -> this.handleEditClick());
+
+        this.deleteTaskButton.addActionListener(e -> this.handleDeleteClick());
+
+        this.addTaskButton.addActionListener(e -> this.handleAddClick());
+
+        this.taskList.getSelectionModel().addListSelectionListener(this::taskListOnChange);
+
         this.filterTextField.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
@@ -172,142 +346,18 @@ public class TaskListCard extends JPanel implements Observer {
             }
         });
 
-        this.deleteTaskButton.addActionListener(e -> {
-            if (taskList.getSelectedIndex() > -1) {
-                // Delete task
-                baseFrame.getApp().getTaskHandler().deleteTask(taskList.getSelectedIndex());
-            }
-        });
-
-        this.addTaskButton.addActionListener(e -> {
-            String taskName = JOptionPane.showInputDialog("Task name");
-
-            // If a task name is provided, write to file
-            if ((taskName != null) && (taskName.length() > 0)) {
-                baseFrame.getApp().getTaskHandler().addTask(taskName);
-            }
-        });
-
         this.taskList.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
 
-                // If it was a double click & a task is selected
-                if (e.getClickCount() == 2 && taskList.getSelectedIndex() > -1) {
-                    Task task = taskList.getSelectedValue();
-
-                    JPanel infoPanel = new JPanel();
-                    infoPanel.setLayout(new MigLayout());
-
-                    infoPanel.add(new JLabel("Task name:"));
-                    infoPanel.add(new JLabel(task.getName()), "wrap");
-
-                    infoPanel.add(new JLabel("Due date:"));
-                    infoPanel.add(new JLabel((task.getDueDate() == null) ? "Not specified" : task.getDueDate().toString()), "wrap");
-
-                    infoPanel.add(new JLabel(task.getCompleted() ? "Completed" : "Not completed"), "wrap");
-
-                    JOptionPane.showMessageDialog(baseFrame, infoPanel, "View task", JOptionPane.PLAIN_MESSAGE);
+                // If it was a double click
+                if (e.getClickCount() == 2) {
+                    handleTaskDoubleClick();
                 }
             }
         });
 
-        this.taskList.getSelectionModel().addListSelectionListener(e -> {
-            if (!e.getValueIsAdjusting()) {
-                if (taskList.getSelectedIndex() > -1) {
-                    this.deleteTaskButton.setEnabled(true);
-                    this.editTaskButton.setEnabled(true);
-                    this.toggleCompleteButton.setEnabled(true);
-                }
-                else {
-                    this.deleteTaskButton.setEnabled(false);
-                    this.editTaskButton.setEnabled(false);
-                    this.toggleCompleteButton.setEnabled(false);
-                }
-
-                // The clear button should only be enabled if there are any tasks
-                this.clearTasksButton.setEnabled(!this.listModel.isEmpty());
-            }
-        });
-
-        this.sortButton.addActionListener(e -> {
-            TaskHandler.SortOrder selectedSortOrder;
-
-            switch (sortOrderComboBox.getSelectedIndex()) {
-                case 0: selectedSortOrder = TaskHandler.SortOrder.NAME_ASC; break;
-                case 1: selectedSortOrder = TaskHandler.SortOrder.NAME_DESC; break;
-                case 2: selectedSortOrder = TaskHandler.SortOrder.DUE_DATE_ASC; break;
-                case 3: selectedSortOrder = TaskHandler.SortOrder.DUE_DATE_DESC; break;
-                case 4: selectedSortOrder = TaskHandler.SortOrder.COMPLETED_ASC; break;
-                case 5: selectedSortOrder = TaskHandler.SortOrder.COMPLETED_DESC; break;
-                default: selectedSortOrder = baseFrame.getApp().getTaskHandler().getDefaultSortingOrder();
-            }
-
-            baseFrame.getApp().getTaskHandler().sortTasks(selectedSortOrder);
-        });
-
-        this.toggleCompleteButton.addActionListener(e -> {
-            if (taskList.getSelectedIndex() > -1) {
-                baseFrame.getApp().getTaskHandler().setComplete(taskList.getSelectedIndex() + 1,
-                        !this.taskList.getSelectedValue().getCompleted());
-            }
-        });
-
-        this.clearTasksButton.addActionListener(e -> baseFrame.getApp().getTaskHandler().clear());
-
-        this.editTaskButton.addActionListener(e -> {
-            if (taskList.getSelectedIndex() > -1) {
-                Task selectedTask = taskList.getSelectedValue();
-
-                JTextField taskNameInput = new JTextField(selectedTask.getName());
-                JCheckBox completed = new JCheckBox();
-                JComboBox<Date> dateComboBox = new JComboBox<>();
-
-                GregorianCalendar calendar = new GregorianCalendar();
-                dateComboBox.addItem(calendar.getTime());
-
-                // Add dates to the combo box
-                for (int i = 0; i < 30; i++) {
-                    calendar.roll(GregorianCalendar.DAY_OF_YEAR, 1);
-                    dateComboBox.addItem(calendar.getTime());
-
-                    // If there already is a due date, select it
-                    if (selectedTask.getDueDate() != null &&
-                        DateUtils.isSameDay(selectedTask.getDueDate(), calendar.getTime()))
-                    {
-                        dateComboBox.setSelectedItem(calendar.getTime());
-                    }
-                }
-                dateComboBox.setRenderer(new DateComboBoxRenderer());
-
-                if (selectedTask.getCompleted()) {
-                    completed.setSelected(true);
-                }
-
-                JPanel dialogPanel = new JPanel();
-                dialogPanel.setLayout(new MigLayout());
-
-                dialogPanel.add(new JLabel("Task name"));
-                dialogPanel.add(taskNameInput, "w 100%, wrap");
-                dialogPanel.add(new JLabel("Due date"));
-                dialogPanel.add(dateComboBox, "wrap");
-                dialogPanel.add(new JLabel("Completed"));
-                dialogPanel.add(completed, "wrap");
-
-                int result = JOptionPane.showConfirmDialog(baseFrame, dialogPanel, "Edit task", JOptionPane.OK_CANCEL_OPTION);
-
-                if (result == JOptionPane.OK_OPTION) {
-                    selectedTask.setName(taskNameInput.getText());
-                    selectedTask.setDueDate((Date) dateComboBox.getSelectedItem());
-                    selectedTask.setCompleted(completed.isSelected());
-
-                    if (selectedTask.getName() != null) {
-                        baseFrame.getApp().getTaskHandler().editTask(taskList.getSelectedIndex() + 1, selectedTask);
-                    }
-                }
-            }
-        });
     }
 
     // Create Date Renderer for formatting Date
