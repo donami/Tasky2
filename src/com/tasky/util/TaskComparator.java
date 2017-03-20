@@ -20,6 +20,11 @@ public class TaskComparator {
 
     public static Comparator<Task> byDueDate(boolean ascending) {
         return (o1, o2) -> {
+
+            if (o1.getDueDate() == null || o2.getDueDate() == null) {
+                return -1;
+            }
+
             if (ascending) {
                 return o2.getDueDate().compareTo(o1.getDueDate());
             }

@@ -6,7 +6,7 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Tasky2/com/tasky/ui/views/TaskListCard.class" afterPath="$PROJECT_DIR$/out/production/Tasky2/com/tasky/ui/views/TaskListCard.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ee11cbb19052e40b07aac0ca060c23ee.ser" afterPath="$PROJECT_DIR$/ee11cbb19052e40b07aac0ca060c23ee.ser" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/tasky/ui/views/TaskListCard.java" afterPath="$PROJECT_DIR$/src/com/tasky/ui/views/TaskListCard.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/tasky/util/TaskComparator.java" afterPath="$PROJECT_DIR$/src/com/tasky/util/TaskComparator.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -25,9 +25,10 @@
       <file leaf-file-name="TaskListCard.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/tasky/ui/views/TaskListCard.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1602">
-              <caret line="16" column="20" lean-forward="false" selection-start-line="16" selection-start-column="20" selection-end-line="16" selection-end-column="20" />
+            <state relative-caret-position="774">
+              <caret line="337" column="21" lean-forward="true" selection-start-line="337" selection-start-column="21" selection-end-line="337" selection-end-column="21" />
               <folding>
+                <element signature="imports" expanded="true" />
                 <element signature="method#initComponents#0;class#TaskListCard#0" expanded="false" />
                 <element signature="method#createGUI#0;class#TaskListCard#0" expanded="false" />
                 <element signature="method#refreshListModel#0;class#TaskListCard#0" expanded="false" />
@@ -44,6 +45,18 @@
                 <element signature="e#12683#12995#0" expanded="true" />
                 <element signature="e#12994#12995#0" expanded="true" />
                 <element signature="class#DateComboBoxRenderer#0;class#TaskListCard#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TaskComparator.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/tasky/util/TaskComparator.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="314">
+              <caret line="24" column="26" lean-forward="true" selection-start-line="24" selection-start-column="26" selection-end-line="24" selection-end-column="26" />
+              <folding>
+                <element signature="imports" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -120,7 +133,6 @@
         <option value="$PROJECT_DIR$/src/com/tasky/util/SLList.java" />
         <option value="$PROJECT_DIR$/src/com/tasky/app/models/Task.java" />
         <option value="$PROJECT_DIR$/src/com/tasky/util/SortableList.java" />
-        <option value="$PROJECT_DIR$/src/com/tasky/util/TaskComparator.java" />
         <option value="$PROJECT_DIR$/src/com/tasky/ui/IView.java" />
         <option value="$PROJECT_DIR$/src/com/tasky/ui/CardHandler.java" />
         <option value="$PROJECT_DIR$/src/com/tasky/ui/BaseFrame.java" />
@@ -129,6 +141,7 @@
         <option value="$PROJECT_DIR$/src/com/tasky/ui/views/StatusPanel.java" />
         <option value="$PROJECT_DIR$/src/com/tasky/ui/AppMenu.java" />
         <option value="$PROJECT_DIR$/src/com/tasky/ui/views/TaskListCard.java" />
+        <option value="$PROJECT_DIR$/src/com/tasky/util/TaskComparator.java" />
       </list>
     </option>
   </component>
@@ -701,7 +714,14 @@
       <option name="project" value="LOCAL" />
       <updated>1490038001803</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Moved events out of addEvents method to seperate methods">
+      <created>1490039547115</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1490039547115</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -750,7 +770,8 @@
     <MESSAGE value="Now able to filter by due date and completed date" />
     <MESSAGE value="Added status panel on bottom, displaying number of tasks due today" />
     <MESSAGE value="Display information when clicking on a task" />
-    <option name="LAST_COMMIT_MESSAGE" value="Display information when clicking on a task" />
+    <MESSAGE value="Moved events out of addEvents method to seperate methods" />
+    <option name="LAST_COMMIT_MESSAGE" value="Moved events out of addEvents method to seperate methods" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -790,6 +811,7 @@
         <state relative-caret-position="1890">
           <caret line="113" column="52" lean-forward="false" selection-start-line="113" selection-start-column="52" selection-end-line="113" selection-end-column="52" />
           <folding>
+            <element signature="imports" expanded="true" />
             <element signature="method#initComponents#0;class#TaskListCard#0" expanded="false" />
             <element signature="method#createGUI#0;class#TaskListCard#0" expanded="false" />
             <element signature="method#refreshListModel#0;class#TaskListCard#0" expanded="false" />
@@ -850,6 +872,7 @@
         <state relative-caret-position="558">
           <caret line="41" column="0" lean-forward="true" selection-start-line="41" selection-start-column="0" selection-end-line="41" selection-end-column="0" />
           <folding>
+            <element signature="imports" expanded="true" />
             <element signature="method#initComponents#0;class#TaskListCard#0" expanded="false" />
             <element signature="method#createGUI#0;class#TaskListCard#0" expanded="false" />
             <element signature="method#refreshListModel#0;class#TaskListCard#0" expanded="false" />
@@ -1007,16 +1030,6 @@
     <entry file="file://$PROJECT_DIR$/_ee11cbb19052e40b07aac0ca060c23ee.ser" />
     <entry file="file://$PROJECT_DIR$/tasks.ser" />
     <entry file="file://$PROJECT_DIR$/_ee11cbb19052e40b07aac0ca060c23ee.ser" />
-    <entry file="file://$PROJECT_DIR$/src/com/tasky/util/TaskComparator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="504">
-          <caret line="30" column="28" lean-forward="false" selection-start-line="30" selection-start-column="28" selection-end-line="30" selection-end-column="28" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/tasky/util/SortableList.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="522">
@@ -1155,11 +1168,22 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/tasky/util/TaskComparator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="314">
+          <caret line="24" column="26" lean-forward="true" selection-start-line="24" selection-start-column="26" selection-end-line="24" selection-end-column="26" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/tasky/ui/views/TaskListCard.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1602">
-          <caret line="16" column="20" lean-forward="false" selection-start-line="16" selection-start-column="20" selection-end-line="16" selection-end-column="20" />
+        <state relative-caret-position="774">
+          <caret line="337" column="21" lean-forward="true" selection-start-line="337" selection-start-column="21" selection-end-line="337" selection-end-column="21" />
           <folding>
+            <element signature="imports" expanded="true" />
             <element signature="method#initComponents#0;class#TaskListCard#0" expanded="false" />
             <element signature="method#createGUI#0;class#TaskListCard#0" expanded="false" />
             <element signature="method#refreshListModel#0;class#TaskListCard#0" expanded="false" />
