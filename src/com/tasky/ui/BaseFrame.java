@@ -15,7 +15,7 @@ public class BaseFrame extends JFrame {
     private final App app;
     private final AppMenu menuBar;
 
-    public BaseFrame(App app) {
+    BaseFrame(App app) {
         this.app = app;
 
         this.menuBar = new AppMenu(this);
@@ -55,7 +55,7 @@ public class BaseFrame extends JFrame {
         return this.cardHandler;
     }
 
-    public void refresh() {
+    void refresh() {
         this.menuBar.refresh();
     }
 }

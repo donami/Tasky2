@@ -20,7 +20,7 @@ public class TaskHandler extends Observable {
 
     public enum SortOrder { NAME_ASC, NAME_DESC, DUE_DATE_ASC, DUE_DATE_DESC, COMPLETED_ASC, COMPLETED_DESC }
 
-    public TaskHandler(App app) {
+    TaskHandler(App app) {
         this.app = app;
         this.tasks = new SortableList<>();
     }
@@ -51,7 +51,7 @@ public class TaskHandler extends Observable {
     /**
      * Load tasks from file
      */
-    public void loadFromFile() throws Exception {
+    void loadFromFile() throws Exception {
         File file = new File(this.getFilename());
 
         if (file.exists() && !file.isDirectory()) {

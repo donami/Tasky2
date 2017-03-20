@@ -1,24 +1,15 @@
 package com.tasky.ui;
 
-import com.sun.xml.internal.bind.v2.TODO;
-import com.tasky.ui.views.AboutCard;
-import com.tasky.ui.views.HomeCard;
-import com.tasky.ui.views.LoginCard;
-import com.tasky.ui.views.TaskListCard;
+import com.tasky.ui.views.*;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
 
 
 /**
  * Created by markus on 2017-03-07.
  */
 
-public class AppMenu extends JMenuBar {
+class AppMenu extends JMenuBar {
     private BaseFrame baseFrame;
     private JMenu fileMenu;
     private JMenu taskMenu;
@@ -28,7 +19,7 @@ public class AppMenu extends JMenuBar {
     private JMenuItem addTaskItem;
     private JMenuItem taskListItem;
 
-    public AppMenu(BaseFrame baseFrame) {
+    AppMenu(BaseFrame baseFrame) {
         this.baseFrame = baseFrame;
 
         this.initComponents();
@@ -66,57 +57,42 @@ public class AppMenu extends JMenuBar {
     }
 
     private void addEvents() {
-        this.homeItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                HomeCard homeCard = new HomeCard(baseFrame);
-                baseFrame.getCardHandler().add(homeCard, HomeCard.HOME_CARD);
-                baseFrame.getCardHandler().getCardLayout().show(baseFrame.getCardHandler(), HomeCard.HOME_CARD);
-            }
+        this.homeItem.addActionListener(e -> {
+            HomeCard homeCard = new HomeCard(baseFrame);
+            baseFrame.getCardHandler().add(homeCard, HomeCard.HOME_CARD);
+            baseFrame.getCardHandler().getCardLayout().show(baseFrame.getCardHandler(), HomeCard.HOME_CARD);
         });
 
-        this.loginItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                LoginCard loginCard = new LoginCard(baseFrame);
-                baseFrame.getCardHandler().add(loginCard, LoginCard.LOGIN_CARD);
-                baseFrame.getCardHandler().getCardLayout().show(baseFrame.getCardHandler(), LoginCard.LOGIN_CARD);
-            }
+        this.loginItem.addActionListener(e -> {
+            LoginCard loginCard = new LoginCard(baseFrame);
+            baseFrame.getCardHandler().add(loginCard, LoginCard.LOGIN_CARD);
+            baseFrame.getCardHandler().getCardLayout().show(baseFrame.getCardHandler(), LoginCard.LOGIN_CARD);
         });
 
-        this.aboutItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                AboutCard aboutCard = new AboutCard(baseFrame);
-                baseFrame.getCardHandler().add(aboutCard, AboutCard.ABOUT_CARD);
-                baseFrame.getCardHandler().getCardLayout().show(baseFrame.getCardHandler(), AboutCard.ABOUT_CARD);
-            }
+        this.aboutItem.addActionListener(e -> {
+            AboutCard aboutCard = new AboutCard(baseFrame);
+            baseFrame.getCardHandler().add(aboutCard, AboutCard.ABOUT_CARD);
+            baseFrame.getCardHandler().getCardLayout().show(baseFrame.getCardHandler(), AboutCard.ABOUT_CARD);
         });
 
-        this.taskListItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                TaskListCard taskListCard = new TaskListCard(baseFrame);
-                baseFrame.getApp().getTaskHandler().addObserver(taskListCard);
-                baseFrame.getCardHandler().add(taskListCard, TaskListCard.TASK_LIST_CARD);
-                baseFrame.getCardHandler().getCardLayout().show(baseFrame.getCardHandler(), TaskListCard.TASK_LIST_CARD);
-            }
+        this.taskListItem.addActionListener(e -> {
+            TaskListCard taskListCard = new TaskListCard(baseFrame);
+            baseFrame.getApp().getTaskHandler().addObserver(taskListCard);
+            baseFrame.getCardHandler().add(taskListCard, TaskListCard.TASK_LIST_CARD);
+            baseFrame.getCardHandler().getCardLayout().show(baseFrame.getCardHandler(), TaskListCard.TASK_LIST_CARD);
         });
 
-        this.addTaskItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-                String taskName = (String) JOptionPane.showInputDialog("Task name");
+        this.addTaskItem.addActionListener(ae -> {
+            String taskName = JOptionPane.showInputDialog("Task name");
 
-                // If a task name is provided, write to file
-                if ((taskName != null) && (taskName.length() > 0)) {
-                    baseFrame.getApp().getTaskHandler().addTask(taskName);
-                }
+            // If a task name is provided, write to file
+            if ((taskName != null) && (taskName.length() > 0)) {
+                baseFrame.getApp().getTaskHandler().addTask(taskName);
             }
         });
     }
 
-    public void refresh() {
+    void refresh() {
         this.fileMenu.removeAll();
         this.createGUI();
     }

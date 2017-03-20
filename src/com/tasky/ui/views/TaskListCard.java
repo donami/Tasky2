@@ -35,6 +35,7 @@ public class TaskListCard extends JPanel implements Observer {
     private JList<Task> taskList;
     private JPanel panelBottomButtons;
     private JPanel panelTopButtons;
+    private StatusPanel statusPanel;
 
     public TaskListCard(BaseFrame baseFrame) {
         this.baseFrame = baseFrame;
@@ -59,8 +60,10 @@ public class TaskListCard extends JPanel implements Observer {
         ListCellRenderer renderer = new ListCellRenderer();
         this.taskList.setCellRenderer(renderer);
         this.jScrollPane1 = new JScrollPane(taskList);
+        this.statusPanel = new StatusPanel();
 
         this.refreshListModel();
+
 
         this.panelBottomButtons = new JPanel();
         this.panelBottomButtons.setLayout(new BoxLayout(this.panelBottomButtons, BoxLayout.LINE_AXIS));
@@ -112,6 +115,8 @@ public class TaskListCard extends JPanel implements Observer {
         this.add(this.panelTopButtons, "w 100%, span, wrap");
         this.add(this.jScrollPane1, "w 100%, h 100%, span, wrap");
         this.add(this.panelBottomButtons, "w 100%, span, wrap");
+        this.add(new JSeparator(SwingConstants.HORIZONTAL), "w 100%, span, wrap");
+        this.add(this.statusPanel);
     }
 
     private void refreshListModel() {
@@ -121,6 +126,8 @@ public class TaskListCard extends JPanel implements Observer {
         while (listIterator.hasNext()) {
             this.listModel.addElement(listIterator.next());
         }
+
+        this.statusPanel.updateUI(this.baseFrame.getApp().getTaskHandler().getTasks());
     }
 
     /**

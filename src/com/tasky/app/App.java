@@ -1,11 +1,9 @@
 package com.tasky.app;
 
-import com.tasky.app.models.Task;
 import com.tasky.app.models.User;
 import com.tasky.db.MySQLAccess;
 import com.tasky.db.dao.UserDao;
 import com.tasky.ui.UI;
-import com.tasky.util.SortableList;
 
 import java.sql.Connection;
 
@@ -20,7 +18,7 @@ public class App {
     private UI ui;
     private Connection conn;
 
-    public App() {
+    private App() {
         try {
             this.conn = new MySQLAccess().getConnection();
         } catch (ClassNotFoundException e) {
@@ -77,8 +75,8 @@ public class App {
 
     /**
      * Set auth and load users task from file, refresh UI
-     * @param isAuthed
-     * @param user
+     * @param isAuthed  The value of authed
+     * @param user  The user
      */
     private void setIsAuthed(boolean isAuthed, User user) {
         this.isAuthed = isAuthed;

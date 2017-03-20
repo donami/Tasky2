@@ -12,7 +12,7 @@ public class CardHandler extends JPanel {
 
     private CardLayout cardLayout;
 
-    public CardHandler() {
+    CardHandler() {
         this.cardLayout = new CardLayout();
         this.setLayout(cardLayout);
     }
