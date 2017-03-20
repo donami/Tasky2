@@ -11,6 +11,8 @@ import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -183,6 +185,31 @@ public class TaskListCard extends JPanel implements Observer {
             // If a task name is provided, write to file
             if ((taskName != null) && (taskName.length() > 0)) {
                 baseFrame.getApp().getTaskHandler().addTask(taskName);
+            }
+        });
+
+        this.taskList.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+
+                // If it was a double click & a task is selected
+                if (e.getClickCount() == 2 && taskList.getSelectedIndex() > -1) {
+                    Task task = taskList.getSelectedValue();
+
+                    JPanel infoPanel = new JPanel();
+                    infoPanel.setLayout(new MigLayout());
+
+                    infoPanel.add(new JLabel("Task name:"));
+                    infoPanel.add(new JLabel(task.getName()), "wrap");
+
+                    infoPanel.add(new JLabel("Due date:"));
+                    infoPanel.add(new JLabel((task.getDueDate() == null) ? "Not specified" : task.getDueDate().toString()), "wrap");
+
+                    infoPanel.add(new JLabel(task.getCompleted() ? "Completed" : "Not completed"), "wrap");
+
+                    JOptionPane.showMessageDialog(baseFrame, infoPanel, "View task", JOptionPane.PLAIN_MESSAGE);
+                }
             }
         });
 
