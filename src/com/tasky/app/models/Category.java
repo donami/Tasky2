@@ -7,16 +7,13 @@ import java.io.Serializable;
  */
 public class Category implements Comparable<Category>, Serializable {
     private String title;
-    private String identifier;
 
-    public Category() {
+    private Category() {
         this.title = null;
-        this.identifier = null;
     }
 
-    public Category(String title, String identifier) {
+    public Category(String title) {
         this.title = title;
-        this.identifier = identifier;
     }
 
     public String getTitle() {
@@ -27,17 +24,22 @@ public class Category implements Comparable<Category>, Serializable {
         this.title = title;
     }
 
-    public String getIdentifier() {
-        return identifier;
-    }
-
-    public void setIdentifier(String identifier) {
-        this.identifier = identifier;
-    }
-
     @Override
     public int compareTo(Category category) {
         return this.getTitle().compareTo(category.getTitle());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null)
+            return false;
+
+        if (!Category.class.isAssignableFrom(o.getClass()))
+            return false;
+
+        final Category other = (Category) o;
+
+        return this.title.equals(other.getTitle());
     }
 
     @Override

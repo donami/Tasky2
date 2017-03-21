@@ -4,6 +4,7 @@ import com.tasky.app.models.Category;
 import com.tasky.util.Encrypt;
 import com.tasky.util.SLList;
 
+import javax.swing.*;
 import java.io.*;
 import java.util.Iterator;
 import java.util.Observable;
@@ -15,7 +16,7 @@ public class CategoryHandler extends Observable {
     private final App app;
     private final SLList<Category> list;
 
-    public CategoryHandler(App app) {
+    CategoryHandler(App app) {
         this.app = app;
         this.list = new SLList<>();
     }
@@ -25,6 +26,12 @@ public class CategoryHandler extends Observable {
      * @param category  Category to add
      */
     public void add(Category category) {
+        // User should not be able to add duplicate categories
+        if (this.list.contains(category)) {
+            JOptionPane.showMessageDialog(null, "Category already exists", "Oops..", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
         this.list.add(category);
 
         setChanged();
@@ -38,7 +45,7 @@ public class CategoryHandler extends Observable {
      * @param index Index to remove
      */
     public void remove(int index) {
-        this.list.remove(index + 1);
+        this.list.remove(index);
 
         setChanged();
         notifyObservers();
@@ -76,16 +83,13 @@ public class CategoryHandler extends Observable {
      */
     void loadFromFile() throws Exception {
         File file = new File(this.getFilename());
-        System.out.println("1");
         if (file.exists() && !file.isDirectory()) {
             // Load the tasks from file to the list
-            System.out.println("2");
             ObjectInputStream ois = null;
             try {
                 ois = new ObjectInputStream(new FileInputStream(this.getFilename()));
                 while (true) {
                     Category category = (Category) ois.readObject();
-                    System.out.println(category);
                     this.list.add(category);
                 }
             } catch (EOFException e) {

@@ -6,6 +6,7 @@ import com.tasky.app.models.Category;
 import com.tasky.app.models.Task;
 import com.tasky.ui.BaseFrame;
 import com.tasky.ui.ListCellRenderer;
+import com.tasky.util.BaseKeyListener;
 import net.miginfocom.swing.MigLayout;
 import org.apache.commons.lang.time.DateUtils;
 
@@ -14,6 +15,7 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.text.SimpleDateFormat;
@@ -37,16 +39,11 @@ public class TaskListCard extends JPanel implements Observer {
     private JTextField filterTextField;
     private DefaultListModel<Task> listModel;
     private JScrollPane jScrollPane;
-    private JScrollPane categoryScrollPane;
+    private CategoryList categoryScrollPane;
     private JList<Task> taskList;
     private JPanel panelBottomButtons;
     private JPanel panelTopButtons;
-    private JPanel panelMenu;
     private StatusPanel statusPanel;
-    private JList<Category> categoryList;
-    private DefaultListModel<Category> categoryListModel;
-    private JButton addCategoryButton;
-    private Category noCategorySelected;
 
     public TaskListCard(BaseFrame baseFrame) {
         this.baseFrame = baseFrame;
@@ -80,21 +77,13 @@ public class TaskListCard extends JPanel implements Observer {
 
         this.refreshListModel();
 
-        this.noCategorySelected = new Category("No category", "no_cat");
-        this.categoryListModel = new DefaultListModel<>();
-        this.categoryListModel.addElement(this.noCategorySelected);
-        this.categoryList = new JList<>();
-        this.categoryList.setModel(this.categoryListModel);
-        this.categoryScrollPane = new JScrollPane(this.categoryList);
+        this.categoryScrollPane = new CategoryList(this.baseFrame.getApp().getCategoryHandler());
 
         this.refreshCategoryListModel();
-
-        this.panelMenu = new JPanel();
 
         this.panelBottomButtons = new JPanel();
         this.panelBottomButtons.setLayout(new BoxLayout(this.panelBottomButtons, BoxLayout.LINE_AXIS));
         this.panelBottomButtons.setBorder(BorderFactory.createEmptyBorder(5, 0, 5, 0));
-
 
         this.panelTopButtons = new JPanel();
         this.panelTopButtons.setLayout(new MigLayout("fill"));
@@ -110,8 +99,6 @@ public class TaskListCard extends JPanel implements Observer {
         this.clearTasksButton = new JButton("Clear all");
         this.filterTextField = new JTextField(20);
 
-        this.addCategoryButton = new JButton("Add category");
-
         String[] availableSortOrders = {
             "Ascending",
             "Descending",
@@ -126,8 +113,6 @@ public class TaskListCard extends JPanel implements Observer {
     }
 
     private void createGUI() {
-        this.panelMenu.add(this.addCategoryButton);
-
         this.panelBottomButtons.add(this.editTaskButton);
         this.panelBottomButtons.add(Box.createRigidArea(new Dimension(10, 0)));
         this.panelBottomButtons.add(this.deleteTaskButton);
@@ -142,15 +127,17 @@ public class TaskListCard extends JPanel implements Observer {
         this.panelTopButtons.add(this.sortOrderComboBox, "align right, split 2");
         this.panelTopButtons.add(this.sortButton);
 
-        this.add(this.panelMenu, "w 100%, span, wrap");
         this.add(this.panelTopButtons, "w 100%, span, wrap");
         this.add(this.categoryScrollPane, "w 30%, h 100%");
         this.add(this.jScrollPane, "w 70%, h 100%, span, wrap");
         this.add(this.panelBottomButtons, "w 100%, span, wrap");
         this.add(new JSeparator(SwingConstants.HORIZONTAL), "w 100%, span, wrap");
-        this.add(this.statusPanel);
+        this.add(this.statusPanel, "wrap, span");
     }
 
+    /**
+     * Refresh the task list
+     */
     private void refreshListModel() {
         this.listModel.clear();
 
@@ -162,27 +149,35 @@ public class TaskListCard extends JPanel implements Observer {
         this.statusPanel.updateUI(this.baseFrame.getApp().getTaskHandler().getTasks());
     }
 
+    /**
+     * Refresh the category list
+     */
     private void refreshCategoryListModel() {
-        this.categoryListModel.clear();
-        this.categoryListModel.addElement(this.noCategorySelected);
-
-        Iterator<Category> listIterator = this.baseFrame.getApp().getCategoryHandler().getList().iterator();
-        while (listIterator.hasNext()) {
-            this.categoryListModel.addElement(listIterator.next());
-        }
+        this.categoryScrollPane.refresh();
+        this.updateTasksWithRemovedCategory();
     }
 
     /**
-     * Event handler for adding category
+     * Update tasks to ensure that there
+     * are no tasks with categories that have been deleted
      */
-    private void handleAddCategoryClick() {
-        String categoryName = JOptionPane.showInputDialog(this.baseFrame, "Category title");
+    private void updateTasksWithRemovedCategory() {
+        Iterator<Task> iterator = this.baseFrame.getApp().getTaskHandler().getTasks().iterator();
+        while (iterator.hasNext()) {
+            Task task = iterator.next();
 
-        if (categoryName != null) {
-            Category category = new Category(categoryName, "main");
-            this.baseFrame.getApp().getCategoryHandler().add(category);
+            if (task.getCategory() == null) continue;
+
+            // If the tasks category is not in the
+            // category list it should be removed
+            if (!categoryScrollPane.contains(task.getCategory())) {
+                task.setCategory(null);
+                // Get index of task
+                int index = this.baseFrame.getApp().getTaskHandler().getTasks().getIndexOfItem(task);
+                // Update task
+                this.baseFrame.getApp().getTaskHandler().editTask(index + 1, task);
+            }
         }
-
     }
 
     /**
@@ -338,7 +333,9 @@ public class TaskListCard extends JPanel implements Observer {
                 selectedTask.setCategory((Category) categoryComboBox.getSelectedItem());
 
                 if (selectedTask.getName() != null) {
-                    this.baseFrame.getApp().getTaskHandler().editTask(this.taskList.getSelectedIndex() + 1, selectedTask);
+                    if (!this.baseFrame.getApp().getTaskHandler().editTask(this.taskList.getSelectedIndex() + 1, selectedTask)) {
+                        JOptionPane.showMessageDialog(this.baseFrame, "Unable to edit task", "Ooops..", JOptionPane.ERROR_MESSAGE);
+                    }
                 }
             }
         }
@@ -376,15 +373,16 @@ public class TaskListCard extends JPanel implements Observer {
     }
 
     /**
-     * Event handler for selecting a task
+     * Event handler for selecting a category
      * @param e Event
      */
-    private void categoryListOnChange(ListSelectionEvent e) {
-        if (categoryList.getSelectedValue() == null || e.getValueIsAdjusting()) {
+    private void categoryJListOnChange(ListSelectionEvent e) {
+
+        if (this.categoryScrollPane.getSelectedValue() == null || e.getValueIsAdjusting()) {
             return;
         }
 
-        if (this.categoryList.getSelectedValue().equals(this.noCategorySelected)) {
+        if (this.categoryScrollPane.isDefaultCategorySelected()) {
             this.listModel.clear();
         }
 
@@ -394,11 +392,16 @@ public class TaskListCard extends JPanel implements Observer {
 
             // If default category is selected, all tasks
             // should be displayed else filter by category
-            if (this.categoryList.getSelectedValue().equals(this.noCategorySelected)) {
+            if (this.categoryScrollPane.isDefaultCategorySelected()) {
                 this.listModel.addElement(curr);
             }
             else {
-                if (!curr.getCategory().getTitle().equals(this.categoryList.getSelectedValue().getTitle())) {
+                if (curr.getCategory() == null) {
+                    this.listModel.removeElement(curr);
+                    continue;
+                }
+
+                if (!curr.getCategory().getTitle().equals(this.categoryScrollPane.getSelectedValue().getTitle())) {
                     if (this.listModel.contains(curr)) {
                         this.listModel.removeElement(curr);
                     }
@@ -423,8 +426,6 @@ public class TaskListCard extends JPanel implements Observer {
      * Add events for the card
      */
     private void addEvents() {
-        this.addCategoryButton.addActionListener(e -> this.handleAddCategoryClick());
-
         this.sortButton.addActionListener(e -> this.handleSortClick());
 
         this.toggleCompleteButton.addActionListener(e -> this.handleToggleCompleteClick());
@@ -439,7 +440,7 @@ public class TaskListCard extends JPanel implements Observer {
 
         this.taskList.getSelectionModel().addListSelectionListener(this::taskListOnChange);
 
-        this.categoryList.getSelectionModel().addListSelectionListener(this::categoryListOnChange);
+        this.categoryScrollPane.getCategoryJList().addListSelectionListener(this::categoryJListOnChange);
 
         this.filterTextField.getDocument().addDocumentListener(new DocumentListener() {
             @Override
@@ -466,6 +467,46 @@ public class TaskListCard extends JPanel implements Observer {
                 // If it was a double click
                 if (e.getClickCount() == 2) {
                     handleTaskDoubleClick();
+                }
+            }
+        });
+
+        this.taskList.addKeyListener(new BaseKeyListener() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (taskList.getSelectedIndex() <= -1) {
+                    return;
+                }
+
+                switch (e.getKeyCode()) {
+                    case KeyEvent.VK_DELETE:
+                        baseFrame.getApp().getTaskHandler().deleteTask(taskList.getSelectedIndex());
+                        break;
+                    case KeyEvent.VK_ENTER:
+                        handleTaskDoubleClick();
+                        break;
+                    case KeyEvent.VK_E:
+                        handleEditClick();
+                        break;
+                    case KeyEvent.VK_LEFT:
+                        categoryScrollPane.focus();
+                    default:
+                }
+            }
+        });
+
+        this.categoryScrollPane.getCategoryJList().addKeyListener(new BaseKeyListener() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                super.keyPressed(e);
+
+                switch (e.getKeyCode()) {
+                    case KeyEvent.VK_RIGHT:
+                        if (taskList.getFirstVisibleIndex() >= 0) {
+                            taskList.setSelectedIndex(taskList.getFirstVisibleIndex());
+                            taskList.requestFocusInWindow();
+                        }
+                    default:
                 }
             }
         });

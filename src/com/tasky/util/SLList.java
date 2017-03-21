@@ -96,6 +96,21 @@ public class SLList<T extends Comparable<T>> implements IList<T> {
     }
 
     /**
+     * Check if the list contains an item
+     * @param item  The item to search for
+     * @return  True if it contains the item, else false
+     */
+    public boolean contains(T item) {
+        Iterator<T> iterator = this.iterator();
+        while (iterator.hasNext()) {
+            if (iterator.next().equals(item))
+                return true;
+        }
+
+        return false;
+    }
+
+    /**
      * Update a node at specific position
      * @param pos   The position of the node to be changed
      * @param data  New element to take its place
@@ -199,6 +214,25 @@ public class SLList<T extends Comparable<T>> implements IList<T> {
         }
 
         return toReturn;
+    }
+
+    /**
+     * Find the index of an item
+     * @param item  The item to search for
+     * @return  The index if found, otherwise -1
+     */
+    public int getIndexOfItem(T item) {
+        int index = -1;
+
+        Iterator<T> iterator = this.iterator();
+        for (int i = 0; iterator.hasNext(); i++) {
+            if (item == iterator.next()) {
+                index = i;
+                break;
+            }
+        }
+
+        return index;
     }
 
     /**

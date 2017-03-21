@@ -1,5 +1,6 @@
 package com.tasky.ui;
 
+import com.tasky.app.models.Category;
 import com.tasky.ui.views.*;
 
 import javax.swing.*;
@@ -13,11 +14,13 @@ class AppMenu extends JMenuBar {
     private final BaseFrame baseFrame;
     private JMenu fileMenu;
     private JMenu taskMenu;
+    private JMenu categoryMenu;
     private JMenuItem aboutItem;
     private JMenuItem loginItem;
     private JMenuItem homeItem;
     private JMenuItem addTaskItem;
     private JMenuItem taskListItem;
+    private JMenuItem addCategoryItem;
 
     AppMenu(BaseFrame baseFrame) {
         this.baseFrame = baseFrame;
@@ -38,6 +41,9 @@ class AppMenu extends JMenuBar {
 
         this.addTaskItem = new JMenuItem("Add task");
         this.taskListItem = new JMenuItem("Tasks");
+
+        this.categoryMenu = new JMenu("Categories");
+        this.addCategoryItem = new JMenuItem("Add category");
     }
 
     private void createGUI() {
@@ -49,6 +55,9 @@ class AppMenu extends JMenuBar {
 
             this.taskMenu.add(this.addTaskItem);
             this.taskMenu.add(this.taskListItem);
+
+            this.categoryMenu.add(this.addCategoryItem);
+            this.add(this.categoryMenu);
         }
         else {
             this.fileMenu.add(this.loginItem);
@@ -83,12 +92,21 @@ class AppMenu extends JMenuBar {
             baseFrame.getCardHandler().getCardLayout().show(baseFrame.getCardHandler(), TaskListCard.TASK_LIST_CARD);
         });
 
-        this.addTaskItem.addActionListener(ae -> {
-            String taskName = JOptionPane.showInputDialog("Task name");
+        this.addTaskItem.addActionListener(e -> {
+            String taskName = JOptionPane.showInputDialog(baseFrame,"Task name", "Add task", JOptionPane.PLAIN_MESSAGE);
 
-            // If a task name is provided, write to file
+            // If a task name is provided, add to list
             if ((taskName != null) && (taskName.length() > 0)) {
                 baseFrame.getApp().getTaskHandler().addTask(taskName);
+            }
+        });
+
+        this.addCategoryItem.addActionListener(e -> {
+            String categoryName = JOptionPane.showInputDialog(baseFrame,"Category name", "Add category", JOptionPane.PLAIN_MESSAGE);
+
+            // If a category name is entered, add it to the list
+            if ((categoryName != null) && (categoryName.length() > 0)) {
+                baseFrame.getApp().getCategoryHandler().add(new Category(categoryName));
             }
         });
     }
