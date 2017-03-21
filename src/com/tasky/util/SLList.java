@@ -269,7 +269,7 @@ public class SLList<T extends Comparable<T>> implements IList<T> {
      * Get the first node in list
      * @return First node
      */
-    protected Node getFirst() {
+    Node getFirst() {
         return this.first;
     }
 
@@ -277,7 +277,7 @@ public class SLList<T extends Comparable<T>> implements IList<T> {
      * Setter of first node
      * @param node  Node to be first in list
      */
-    protected void setFirst(Node node) {
+    void setFirst(Node node) {
         this.first = node;
     }
 
@@ -285,7 +285,7 @@ public class SLList<T extends Comparable<T>> implements IList<T> {
      * Setter of the last node
      * @param node  Node to be last in the list
      */
-    protected void setLast(Node node) {
+    void setLast(Node node) {
         this.last = node;
     }
 }

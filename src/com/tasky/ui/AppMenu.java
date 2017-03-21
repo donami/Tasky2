@@ -10,7 +10,7 @@ import javax.swing.*;
  */
 
 class AppMenu extends JMenuBar {
-    private BaseFrame baseFrame;
+    private final BaseFrame baseFrame;
     private JMenu fileMenu;
     private JMenu taskMenu;
     private JMenuItem aboutItem;
@@ -78,6 +78,7 @@ class AppMenu extends JMenuBar {
         this.taskListItem.addActionListener(e -> {
             TaskListCard taskListCard = new TaskListCard(baseFrame);
             baseFrame.getApp().getTaskHandler().addObserver(taskListCard);
+            baseFrame.getApp().getCategoryHandler().addObserver(taskListCard);
             baseFrame.getCardHandler().add(taskListCard, TaskListCard.TASK_LIST_CARD);
             baseFrame.getCardHandler().getCardLayout().show(baseFrame.getCardHandler(), TaskListCard.TASK_LIST_CARD);
         });

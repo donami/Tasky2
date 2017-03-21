@@ -11,11 +11,11 @@ import java.net.URL;
  */
 public class ListCellRenderer extends DefaultListCellRenderer {
 
-    private JLabel label;
-    private Color textSelectionColor = Color.WHITE;
-    private Color backgroundSelectionColor = new Color(95, 186, 125);
-    private Color textNonSelectionColor = Color.BLACK;
-    private Color backgroundNonSelectionColor = Color.WHITE;
+    private final JLabel label;
+    private final Color textSelectionColor = Color.WHITE;
+    private final Color backgroundSelectionColor = new Color(95, 186, 125);
+    private final Color textNonSelectionColor = Color.BLACK;
+    private final Color backgroundNonSelectionColor = Color.WHITE;
 
     public ListCellRenderer() {
         this.label = new JLabel();

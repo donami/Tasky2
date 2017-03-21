@@ -13,9 +13,10 @@ import java.sql.Connection;
 public class App {
     private Boolean isAuthed;
     private User auth;
-    private TaskHandler taskHandler;
-    private UserDao userDao;
-    private UI ui;
+    private final TaskHandler taskHandler;
+    private final CategoryHandler categoryHandler;
+    private final UserDao userDao;
+    private final UI ui;
     private Connection conn;
 
     private App() {
@@ -29,6 +30,7 @@ public class App {
         this.auth = null;
         this.ui = new UI(this);
         this.taskHandler = new TaskHandler(this);
+        this.categoryHandler = new CategoryHandler(this);
         this.userDao = new UserDao(this.conn);
     }
 
@@ -41,11 +43,19 @@ public class App {
     }
 
     /**
-     * Getter for taskhandler
-     * @return  The taskhandler
+     * Getter for task handler
+     * @return  The task handler
      */
     public TaskHandler getTaskHandler() {
         return this.taskHandler;
+    }
+
+    /**
+     * Getter for the category handler
+     * @return  The category handler
+     */
+    public CategoryHandler getCategoryHandler() {
+        return this.categoryHandler;
     }
 
     /**
@@ -84,6 +94,7 @@ public class App {
 
         // Load the tasks from file
         try {
+            this.categoryHandler.loadFromFile();
             this.taskHandler.loadFromFile();
         } catch (Exception e) {
             e.printStackTrace();

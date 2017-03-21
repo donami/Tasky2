@@ -14,9 +14,9 @@ import java.util.Observable;
  */
 public class TaskHandler extends Observable {
 
-    private App app;
-    private SortableList<Task> tasks;
-    private SortOrder defaultSortingOrder = SortOrder.NAME_ASC;
+    private final App app;
+    private final SortableList<Task> tasks;
+    private final SortOrder defaultSortingOrder = SortOrder.NAME_ASC;
 
     public enum SortOrder { NAME_ASC, NAME_DESC, DUE_DATE_ASC, DUE_DATE_DESC, COMPLETED_ASC, COMPLETED_DESC }
 

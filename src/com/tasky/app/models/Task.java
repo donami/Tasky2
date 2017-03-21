@@ -12,16 +12,19 @@ public class Task extends TaskComparator implements Comparable<Task>, Serializab
     private String name;
     private Boolean completed;
     private Date dueDate;
+    private Category category;
 
     public Task(String name) {
         this.name = name;
         this.completed = false;
         this.dueDate = null;
+        this.category = null;
     }
 
     public Task(String name, boolean completed) {
         this.name = name;
         this.completed = completed;
+        this.category = null;
     }
 
     public String getName() {
@@ -46,6 +49,14 @@ public class Task extends TaskComparator implements Comparable<Task>, Serializab
 
     public Date getDueDate() {
         return this.dueDate;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     @Override

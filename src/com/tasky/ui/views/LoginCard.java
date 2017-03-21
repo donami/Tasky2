@@ -5,8 +5,6 @@ import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 /**
  * Created by markus on 2017-02-28.
@@ -15,7 +13,7 @@ public class LoginCard extends JPanel {
 
     final public static String LOGIN_CARD = "Login Card";
 
-    private BaseFrame baseFrame;
+    private final BaseFrame baseFrame;
     private JButton loginButton;
     private TextField usernameTextField;
     private JPasswordField passwordTextField;
@@ -53,12 +51,7 @@ public class LoginCard extends JPanel {
     }
 
     private void addEvents() {
-        this.loginButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                login(usernameTextField.getText(), passwordTextField.getText());
-            }
-        });
+        this.loginButton.addActionListener(e -> this.login(usernameTextField.getText(), passwordTextField.getText()));
     }
 
     private void login(String username, String password) {

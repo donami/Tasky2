@@ -1,15 +1,13 @@
 package com.tasky.ui;
 import com.tasky.app.App;
-import com.tasky.app.TaskHandler;
 
-import javax.swing.*;
 import java.awt.*;
 
 /**
  * Created by markus on 2017-03-07.
  */
 public class UI {
-    private BaseFrame frame;
+    private final BaseFrame frame;
 
     public UI(App app) {
         this.frame = new BaseFrame(app);

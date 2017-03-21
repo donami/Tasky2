@@ -14,7 +14,7 @@ import java.awt.*;
 public class HomeCard extends JPanel {
     final public static String HOME_CARD = "Home Card";
 
-    private BaseFrame baseFrame;
+    private final BaseFrame baseFrame;
     private JLabel welcomeLabel;
     private JLabel welcomeText;
 

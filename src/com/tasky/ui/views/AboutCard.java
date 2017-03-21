@@ -5,8 +5,6 @@ import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 /**
  * Created by markus on 2017-02-28.
@@ -15,7 +13,7 @@ public class AboutCard extends JPanel {
 
     final public static String ABOUT_CARD = "About Card";
 
-    private BaseFrame baseFrame;
+    private final BaseFrame baseFrame;
     private JLabel headingLabel;
     private JLabel authorLabel;
     private JLabel versionLabel;

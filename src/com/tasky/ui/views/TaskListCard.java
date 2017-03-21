@@ -1,6 +1,8 @@
 package com.tasky.ui.views;
 
+import com.tasky.app.CategoryHandler;
 import com.tasky.app.TaskHandler;
+import com.tasky.app.models.Category;
 import com.tasky.app.models.Task;
 import com.tasky.ui.BaseFrame;
 import com.tasky.ui.ListCellRenderer;
@@ -34,11 +36,17 @@ public class TaskListCard extends JPanel implements Observer {
     private JComboBox<String> sortOrderComboBox;
     private JTextField filterTextField;
     private DefaultListModel<Task> listModel;
-    private JScrollPane jScrollPane1;
+    private JScrollPane jScrollPane;
+    private JScrollPane categoryScrollPane;
     private JList<Task> taskList;
     private JPanel panelBottomButtons;
     private JPanel panelTopButtons;
+    private JPanel panelMenu;
     private StatusPanel statusPanel;
+    private JList<Category> categoryList;
+    private DefaultListModel<Category> categoryListModel;
+    private JButton addCategoryButton;
+    private Category noCategorySelected;
 
     public TaskListCard(BaseFrame baseFrame) {
         this.baseFrame = baseFrame;
@@ -50,7 +58,12 @@ public class TaskListCard extends JPanel implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
-        this.refreshListModel();
+        if (o instanceof TaskHandler) {
+            this.refreshListModel();
+        }
+        else if (o instanceof CategoryHandler) {
+            this.refreshCategoryListModel();
+        }
     }
 
     private void initComponents() {
@@ -62,11 +75,21 @@ public class TaskListCard extends JPanel implements Observer {
         this.taskList.setModel(this.listModel);
         ListCellRenderer renderer = new ListCellRenderer();
         this.taskList.setCellRenderer(renderer);
-        this.jScrollPane1 = new JScrollPane(taskList);
+        this.jScrollPane = new JScrollPane(taskList);
         this.statusPanel = new StatusPanel();
 
         this.refreshListModel();
 
+        this.noCategorySelected = new Category("No category", "no_cat");
+        this.categoryListModel = new DefaultListModel<>();
+        this.categoryListModel.addElement(this.noCategorySelected);
+        this.categoryList = new JList<>();
+        this.categoryList.setModel(this.categoryListModel);
+        this.categoryScrollPane = new JScrollPane(this.categoryList);
+
+        this.refreshCategoryListModel();
+
+        this.panelMenu = new JPanel();
 
         this.panelBottomButtons = new JPanel();
         this.panelBottomButtons.setLayout(new BoxLayout(this.panelBottomButtons, BoxLayout.LINE_AXIS));
@@ -87,6 +110,8 @@ public class TaskListCard extends JPanel implements Observer {
         this.clearTasksButton = new JButton("Clear all");
         this.filterTextField = new JTextField(20);
 
+        this.addCategoryButton = new JButton("Add category");
+
         String[] availableSortOrders = {
             "Ascending",
             "Descending",
@@ -101,6 +126,8 @@ public class TaskListCard extends JPanel implements Observer {
     }
 
     private void createGUI() {
+        this.panelMenu.add(this.addCategoryButton);
+
         this.panelBottomButtons.add(this.editTaskButton);
         this.panelBottomButtons.add(Box.createRigidArea(new Dimension(10, 0)));
         this.panelBottomButtons.add(this.deleteTaskButton);
@@ -115,8 +142,10 @@ public class TaskListCard extends JPanel implements Observer {
         this.panelTopButtons.add(this.sortOrderComboBox, "align right, split 2");
         this.panelTopButtons.add(this.sortButton);
 
+        this.add(this.panelMenu, "w 100%, span, wrap");
         this.add(this.panelTopButtons, "w 100%, span, wrap");
-        this.add(this.jScrollPane1, "w 100%, h 100%, span, wrap");
+        this.add(this.categoryScrollPane, "w 30%, h 100%");
+        this.add(this.jScrollPane, "w 70%, h 100%, span, wrap");
         this.add(this.panelBottomButtons, "w 100%, span, wrap");
         this.add(new JSeparator(SwingConstants.HORIZONTAL), "w 100%, span, wrap");
         this.add(this.statusPanel);
@@ -131,6 +160,29 @@ public class TaskListCard extends JPanel implements Observer {
         }
 
         this.statusPanel.updateUI(this.baseFrame.getApp().getTaskHandler().getTasks());
+    }
+
+    private void refreshCategoryListModel() {
+        this.categoryListModel.clear();
+        this.categoryListModel.addElement(this.noCategorySelected);
+
+        Iterator<Category> listIterator = this.baseFrame.getApp().getCategoryHandler().getList().iterator();
+        while (listIterator.hasNext()) {
+            this.categoryListModel.addElement(listIterator.next());
+        }
+    }
+
+    /**
+     * Event handler for adding category
+     */
+    private void handleAddCategoryClick() {
+        String categoryName = JOptionPane.showInputDialog(this.baseFrame, "Category title");
+
+        if (categoryName != null) {
+            Category category = new Category(categoryName, "main");
+            this.baseFrame.getApp().getCategoryHandler().add(category);
+        }
+
     }
 
     /**
@@ -171,6 +223,9 @@ public class TaskListCard extends JPanel implements Observer {
 
         infoPanel.add(new JLabel("Task name:"));
         infoPanel.add(new JLabel(task.getName()), "wrap");
+
+        infoPanel.add(new JLabel("Category:"));
+        infoPanel.add(new JLabel((task.getCategory() == null) ? "No category" : task.getCategory().getTitle()), "wrap");
 
         infoPanel.add(new JLabel("Due date:"));
         infoPanel.add(new JLabel((task.getDueDate() == null) ? "Not specified" : task.getDueDate().toString()), "wrap");
@@ -227,13 +282,22 @@ public class TaskListCard extends JPanel implements Observer {
     private void handleEditClick() {
         if (this.taskList.getSelectedIndex() > -1) {
             Task selectedTask = this.taskList.getSelectedValue();
-
             JTextField taskNameInput = new JTextField(selectedTask.getName());
             JCheckBox completed = new JCheckBox();
+            JComboBox<Category> categoryComboBox = new JComboBox<>();
             JComboBox<Date> dateComboBox = new JComboBox<>();
+
+            if (this.baseFrame.getApp().getCategoryHandler().getList().getNrOfElements() <= 0) {
+                categoryComboBox.setEnabled(false);
+            }
 
             GregorianCalendar calendar = new GregorianCalendar();
             dateComboBox.addItem(calendar.getTime());
+
+            Iterator<Category> listIterator = this.baseFrame.getApp().getCategoryHandler().getList().iterator();
+            while (listIterator.hasNext()) {
+                categoryComboBox.addItem(listIterator.next());
+            }
 
             // Add dates to the combo box
             for (int i = 0; i < 30; i++) {
@@ -258,6 +322,8 @@ public class TaskListCard extends JPanel implements Observer {
 
             dialogPanel.add(new JLabel("Task name"));
             dialogPanel.add(taskNameInput, "w 100%, wrap");
+            dialogPanel.add(new JLabel("Category"));
+            dialogPanel.add(categoryComboBox, "w 100%, wrap");
             dialogPanel.add(new JLabel("Due date"));
             dialogPanel.add(dateComboBox, "wrap");
             dialogPanel.add(new JLabel("Completed"));
@@ -269,6 +335,7 @@ public class TaskListCard extends JPanel implements Observer {
                 selectedTask.setName(taskNameInput.getText());
                 selectedTask.setDueDate((Date) dateComboBox.getSelectedItem());
                 selectedTask.setCompleted(completed.isSelected());
+                selectedTask.setCategory((Category) categoryComboBox.getSelectedItem());
 
                 if (selectedTask.getName() != null) {
                     this.baseFrame.getApp().getTaskHandler().editTask(this.taskList.getSelectedIndex() + 1, selectedTask);
@@ -289,6 +356,7 @@ public class TaskListCard extends JPanel implements Observer {
 
     /**
      * Event handler for selecting a task
+     * @param e Event
      */
     private void taskListOnChange(ListSelectionEvent e) {
         if (!e.getValueIsAdjusting()) {
@@ -308,13 +376,55 @@ public class TaskListCard extends JPanel implements Observer {
     }
 
     /**
+     * Event handler for selecting a task
+     * @param e Event
+     */
+    private void categoryListOnChange(ListSelectionEvent e) {
+        if (categoryList.getSelectedValue() == null || e.getValueIsAdjusting()) {
+            return;
+        }
+
+        if (this.categoryList.getSelectedValue().equals(this.noCategorySelected)) {
+            this.listModel.clear();
+        }
+
+        Iterator<Task> listIterator = this.baseFrame.getApp().getTaskHandler().getTasks().iterator();
+        while (listIterator.hasNext()) {
+            Task curr = listIterator.next();
+
+            // If default category is selected, all tasks
+            // should be displayed else filter by category
+            if (this.categoryList.getSelectedValue().equals(this.noCategorySelected)) {
+                this.listModel.addElement(curr);
+            }
+            else {
+                if (!curr.getCategory().getTitle().equals(this.categoryList.getSelectedValue().getTitle())) {
+                    if (this.listModel.contains(curr)) {
+                        this.listModel.removeElement(curr);
+                    }
+                }
+                else {
+                    if (!this.listModel.contains(curr)) {
+                        this.listModel.addElement(curr);
+                    }
+                }
+            }
+        }
+    }
+
+    /**
      * Event handler for clicking clear
      */
     private void handleClearClick() {
         this.baseFrame.getApp().getTaskHandler().clear();
     }
 
+    /**
+     * Add events for the card
+     */
     private void addEvents() {
+        this.addCategoryButton.addActionListener(e -> this.handleAddCategoryClick());
+
         this.sortButton.addActionListener(e -> this.handleSortClick());
 
         this.toggleCompleteButton.addActionListener(e -> this.handleToggleCompleteClick());
@@ -328,6 +438,8 @@ public class TaskListCard extends JPanel implements Observer {
         this.addTaskButton.addActionListener(e -> this.handleAddClick());
 
         this.taskList.getSelectionModel().addListSelectionListener(this::taskListOnChange);
+
+        this.categoryList.getSelectionModel().addListSelectionListener(this::categoryListOnChange);
 
         this.filterTextField.getDocument().addDocumentListener(new DocumentListener() {
             @Override
